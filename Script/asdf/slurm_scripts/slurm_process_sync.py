@@ -10,7 +10,6 @@ N_node = 20
 N_cores_each_node = 20
 
 # the base sync directory storing asdf files
-base_dir = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/raw_sync"
 N_files = 270
 N_iters = 14
 
@@ -18,7 +17,7 @@ N_iters = 14
 PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
 min_periods = "10,20,40"
 max_periods = "120,120,120"
-waveform_length = 2400
+waveform_length = 2340
 sampling_rate = 10
 logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/processed_for_first_iteration_validation.log"
 RAW_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/raw_sync"
@@ -42,7 +41,7 @@ def get_scripts(run_files):
             if(offset >= N_files):
                 continue
             filename = run_files[offset]
-            result += f"srun -N 1 -n {N_cores_each_node} {PY} process_sync.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} &"
+            result += f"srun -N 1 -n {N_cores_each_node} {PY} ../process/process_sync.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} &"
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
     return result

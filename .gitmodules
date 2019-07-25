@@ -1,0 +1,3 @@
+[submodule "Program/specfem_gll.jl/examples/sem_utils"]
+	path = Program/specfem_gll.jl/examples/sem_utils
+	url = https://github.com/ziyixi/sem_utils
