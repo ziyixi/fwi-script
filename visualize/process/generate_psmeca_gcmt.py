@@ -35,16 +35,16 @@ def split_tensor_exponent(tensor):
 
 
 def main():
-    event_xml = "../data/event_info.xml"
+    event_xml = "/Users/ziyixi/work/seismic-code/fwi-scripts/visualize/data/cmts_new/*"
     tensor_dict = get_tensor_dict(event_xml)
-    with open("../data/psmeca_gcmts.log", "w") as f:
+    with open("../data/psmeca_gcmts_all484.log.nokey", "w") as f:
         for key in tensor_dict:
             item, longitude, latitude, depth = tensor_dict[key]
             tensor = split_tensor_exponent(item)
-            f.write(
-                f'{longitude} {latitude} {depth/1000:.2f} {tensor["m_rr"]:.3f} {tensor["m_tt"]:.3f} {tensor["m_pp"]:.3f} {tensor["m_rt"]:.3f} {tensor["m_rp"]:.3f} {tensor["m_tp"]:.3f} {tensor["exp"]} 0 0 {key}\n')
             # f.write(
-            #     f'{longitude} {latitude} {depth/1000:.2f} {tensor["m_rr"]:.3f} {tensor["m_tt"]:.3f} {tensor["m_pp"]:.3f} {tensor["m_rt"]:.3f} {tensor["m_rp"]:.3f} {tensor["m_tp"]:.3f} {tensor["exp"]} 0 0 \n')
+            #     f'{longitude} {latitude} {depth/1000:.2f} {tensor["m_rr"]:.3f} {tensor["m_tt"]:.3f} {tensor["m_pp"]:.3f} {tensor["m_rt"]:.3f} {tensor["m_rp"]:.3f} {tensor["m_tp"]:.3f} {tensor["exp"]} 0 0 {key}\n')
+            f.write(
+                f'{longitude} {latitude} {depth/1000:.2f} {tensor["m_rr"]:.3f} {tensor["m_tt"]:.3f} {tensor["m_pp"]:.3f} {tensor["m_rt"]:.3f} {tensor["m_rp"]:.3f} {tensor["m_tp"]:.3f} {tensor["exp"]} 0 0 \n')
 
 
 if __name__ == "__main__":

@@ -1,3 +1,9 @@
 *.pyc
 *.pkl
 *.DS_Store
+visualize/data/cmts/
+visualize/data/cmts_new/
+others/.ipynb_checkpoints/
+Script/asdf/benchmark/.ipynb_checkpoints
+Script/asdf/benchmark/data
+Script/asdf/benchmark/HA.JY
