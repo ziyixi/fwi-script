@@ -24,7 +24,7 @@ def main():
             stla = thetrace.stats.sac.stla
             stlo = thetrace.stats.sac.stlo
             stel = thetrace.stats.sac.stel
-            f.write(f"{item} KG {stla} {stlo} {stel} 0.0\n")
+            f.write(f"{item} KG {stla:.6f} {stlo:.6f} {stel:.1f} 0.0\n")
 
 
 if __name__ == "__main__":
