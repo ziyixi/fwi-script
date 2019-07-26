@@ -19,7 +19,7 @@ min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/processed_for_first_iteration_validation.log"
+logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/process_sync.log"
 RAW_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/raw_sync"
 PROCESSED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/processed"
 

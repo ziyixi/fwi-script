@@ -19,7 +19,7 @@ min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/processed_for_first_iteration_validation.log"
+logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/process_data.log"
 RAW_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/asdf_for_validation"
 PROCESSED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/processed"
 SIMPLED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/processed_simple"
@@ -44,7 +44,7 @@ def get_scripts(run_files):
             if(offset >= N_files):
                 continue
             filename = run_files[offset]
-            result += f"srun -N 1 -n {N_cores_each_node} {PY} ../process/process_data.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} --correct_cea --cea_correction_file {cea_correction_file}&"
+            result += f"srun -N 1 -n {N_cores_each_node} {PY} ../process/process_data.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} --correct_cea --cea_correction_file {cea_correction_file} &"
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
     # remove empty stations, run in serial
@@ -59,7 +59,7 @@ def get_scripts(run_files):
 
 def submit_job(thecommand):
     s = Slurm("process_data", {"nodes": N_node, "ntasks": N_cores,
-                               "time": "02:00:00", "cpus-per-task": 1, "mem-per-cpu": "2G"})
+                               "time": "02:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
     s.run(thecommand)
 
 
