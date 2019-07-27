@@ -14,7 +14,7 @@ def main():
         keys.add("_".join(splitter[:3]))
     for item in keys:
         keyfiles = glob(join(basedir, item+"*"))
-        if(len(keyfiles) != 9):
+        if(len(keyfiles) != 3):
             print(item)
 
 
