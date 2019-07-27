@@ -5,7 +5,7 @@ basedir = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/processed"
 
 
 def main():
-    allfiles = glob(join(basedir))
+    allfiles = glob(join(basedir, "*h5"))
     allfiles = [basename(item) for item in allfiles]
 
     keys = set()
