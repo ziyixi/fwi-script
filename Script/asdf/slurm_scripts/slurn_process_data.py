@@ -59,7 +59,7 @@ def get_scripts(run_files):
 
 def submit_job(thecommand):
     s = Slurm("process_data", {"nodes": N_node, "ntasks": N_cores,
-                               "time": "02:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
+                               "time": "04:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
     s.run(thecommand)
 
 
