@@ -11,10 +11,10 @@ def main():
     keys = set()
     for item in allfiles:
         splitter = item.split("_")
-        keys.add("_".join(splitter[:3]))
+        keys.add("_".join(splitter[:2]))
     for item in keys:
         keyfiles = glob(join(basedir, item+"*"))
-        if(len(keyfiles) != 3):
+        if(len(keyfiles) != 27):
             print(item)
 
 
