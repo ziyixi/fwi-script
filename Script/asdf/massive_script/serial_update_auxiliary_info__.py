@@ -42,7 +42,7 @@ def main(main_dir):
     all_files = get_all_files(main_dir)
     ref_file = get_ref_file(all_files)
     for each_file in tqdm.tqdm(all_files):
-        pkl_file = write_single(each_file)
+        pkl_file = write_single(each_file, ref_file)
         read_single(pkl_file, ref_file, each_file)
 
 
