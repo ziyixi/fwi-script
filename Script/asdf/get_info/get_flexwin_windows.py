@@ -48,13 +48,21 @@ def run(ds_obs, ds_syn):
     # the kernel function
     def process(gp_obs, gp_syn):
         stationxml = gp_obs.StationXML
-        observed = gp_obs[thetag_obs]
-        synthetic = gp_syn[thetag_syn]
+        observed = gp_obs[thetag_obs].copy()
+        synthetic = gp_syn[thetag_syn].copy()
         all_windows = []
 
         for index in range(3):
             obs = observed[index]
             syn = synthetic[index]
+            # there may have possibility that the npts are not equal
+            if(obs.stats.npts != syn.stats.npts):
+                if(obs.stats.npts < syn.stats.npts):
+                    # cut according to the obs
+                    syn.trim(obs.stats.starttime, obs.stats.endtime)
+                else:
+                    # cut according to the syn
+                    obs.trim(syn.stats.starttime, syn.stats.endtime)
 
             windows = pyflex.select_windows(
                 obs, syn, config, event=event, station=stationxml)
