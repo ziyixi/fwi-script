@@ -3,6 +3,12 @@ from pyasdf import ASDFDataSet
 import pickle
 from loguru import logger
 import click
+from mpi4py import MPI
+
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
+isroot = (rank == 0)
 
 
 def get_asdf_info(ds):
@@ -82,8 +88,10 @@ def main(obs_path, syn_path, out_path, logfile):
             results = run(ds_obs, ds_syn)
             logger.info(f"finish processing {obs_path} & {syn_path}")
 
-    with open(out_path, "wb") as handle:
-        pickle.dump(results, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    if(isroot):
+        with open(out_path, "wb") as handle:
+            pickle.dump(results, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    MPI.Barrier(comm)
 
 
 if __name__ == "__main__":
