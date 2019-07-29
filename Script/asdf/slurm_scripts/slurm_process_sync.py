@@ -1,4 +1,3 @@
-import sys
 from glob import glob
 from os.path import join
 

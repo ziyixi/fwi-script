@@ -91,7 +91,7 @@ def main(obs_path, syn_path, out_path, logfile):
     if(isroot):
         with open(out_path, "wb") as handle:
             pickle.dump(results, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    comm.Barrier(comm)
+    comm.Barrier()
 
 
 if __name__ == "__main__":
