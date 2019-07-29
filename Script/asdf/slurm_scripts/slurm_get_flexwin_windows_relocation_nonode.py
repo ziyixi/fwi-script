@@ -82,7 +82,7 @@ def get_scripts():
 
 
 def submit_job(thecommand):
-    s = Slurm("flexwin", {"nodes": "1-40", "ntasks": N_cores,
+    s = Slurm("flexwin", {"ntasks": N_cores,
                           "time": "06:00:00", "cpus-per-task": 1, "mem-per-cpu": "2G"})
     s.run(thecommand)
 
