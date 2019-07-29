@@ -66,6 +66,9 @@ def run(ds_obs, ds_syn):
                     # cut according to the syn
                     obs.trim(syn.stats.starttime, syn.stats.endtime)
 
+            # must have the same starttime
+            syn.stats.starttime = obs.stats.starttime
+
             windows = pyflex.select_windows(
                 obs, syn, config, event=event, station=stationxml)
 
