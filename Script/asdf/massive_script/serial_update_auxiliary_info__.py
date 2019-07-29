@@ -9,7 +9,7 @@ import click
 import tqdm
 
 
-PY = "/work/05880/tg851791/stampede2/anaconda3/envs/seismology/bin/python"
+PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
 
 
 def get_all_files(main_dir):
