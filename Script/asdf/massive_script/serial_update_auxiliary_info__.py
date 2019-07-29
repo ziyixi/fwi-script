@@ -26,13 +26,13 @@ def write_single(thefile):
     file_obj.close()
     file_path = file_obj.name
     # calculate the pkl info.
-    command = f"{PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --pkl_path {file_path}"
+    command = f"{PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
     subprocess.call(command, shell=True)
     return file_path
 
 
 def read_single(pkl_file, ref_file, thefile):
-    command = f"{PY} ../process/update_auxiliary_from_file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {pkl_file}"
+    command = f"{PY} ../process/update_auxiliary_from_file.py --obs_path {thefile}  --pkl_path {pkl_file}"
     subprocess.call(command, shell=True)
 
 
