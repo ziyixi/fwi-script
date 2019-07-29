@@ -47,12 +47,6 @@ def get_scripts(run_files):
             result += f"srun -N 1 -n {N_cores_each_node} {PY} ../process/process_data.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} --correct_cea --cea_correction_file {cea_correction_file} &"
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
-    # remove empty stations, run in serial
-    all_processed_files = glob(join(PROCESSED_DIR, "*h5"))
-    for filepath in all_processed_files:
-        filename = filepath.split("/")[-1]
-        output_file = join(SIMPLED_DIR, filename)
-        result += f"{PY} ../process/simplify_stations_after_process_data.py --asdf_file {filepath} --logfile {logfile} --output_file {output_file}"
 
     return result
 
