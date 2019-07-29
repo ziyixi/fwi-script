@@ -75,7 +75,7 @@ def get_scripts():
                 continue
             thekey = runfile_keys[offset]
             obs_path, syn_path, out_path = runfile_pairs[thekey]
-            result += f"mpirun -np {N_cores_each_node} {PY} ../get_info/get_flexwin_windows.py --obs_path {obs_path} --syn_path {syn_path} --out_path {out_path} --logfile {logfile} &"
+            result += f"srun -N1-20 -n {N_cores_each_node} {PY} ../get_info/get_flexwin_windows.py --obs_path {obs_path} --syn_path {syn_path} --out_path {out_path} --logfile {logfile} &"
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
     return result
