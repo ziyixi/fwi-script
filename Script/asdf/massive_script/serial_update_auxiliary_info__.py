@@ -20,7 +20,7 @@ def get_ref_file(all_files):
     return all_files[0]
 
 
-def write_single(thefile):
+def write_single(thefile, ref_file):
     # create a temp file to store pkl info.
     file_obj = tempfile.NamedTemporaryFile(delete=False)
     file_obj.close()
