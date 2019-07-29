@@ -6,13 +6,15 @@ from glob import glob
 import click
 import subprocess
 from os.path import join, basename
+from simplify_stations_after_process_data import work
 
-PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
+# PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
 
 
 def run_single(asdf_file, logfile, output_file):
-    command = f"{PY} ./simplify_stations_after_process_data.py --asdf_file {asdf_file} --logfile {logfile} --output_file {output_file}"
-    subprocess.call(command, shell=True)
+    # command = f"{PY} ./simplify_stations_after_process_data.py --asdf_file {asdf_file} --logfile {logfile} --output_file {output_file}"
+    # subprocess.call(command, shell=True)
+    work(asdf_file, logfile, output_file)
 
 
 def run_all(base_dir, log_file, output_dir):

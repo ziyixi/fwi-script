@@ -45,11 +45,7 @@ def remove_stations(ds):
                     f"{inv.get_contents()['stations'][0]} keeps the loc {reference_loc}, discard {discard_locs}")
 
 
-@click.command()
-@click.option('--asdf_file', required=True, type=str, help="the data asdf file")
-@click.option('--logfile', required=True, type=str, help="the log file")
-@click.option('--output_file', required=True, type=str, help="the output file")
-def main(asdf_file, logfile, output_file):
+def work(asdf_file, logfile, output_file):
     command = f"cp {asdf_file} {output_file}"
     subprocess.call(command, shell=True)
 
@@ -60,6 +56,14 @@ def main(asdf_file, logfile, output_file):
     remove_stations(ds)
     logger.success("finish removing missing stations")
     del ds
+
+
+@click.command()
+@click.option('--asdf_file', required=True, type=str, help="the data asdf file")
+@click.option('--logfile', required=True, type=str, help="the log file")
+@click.option('--output_file', required=True, type=str, help="the output file")
+def main(asdf_file, logfile, output_file):
+    work(asdf_file, logfile, output_file)
 
 
 if __name__ == "__main__":
