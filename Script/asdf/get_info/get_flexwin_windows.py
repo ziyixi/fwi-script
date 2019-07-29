@@ -43,7 +43,7 @@ def run(ds_obs, ds_syn):
     thetag_obs, min_period, max_period = get_asdf_info(ds_obs)
     thetag_syn, _, _ = get_asdf_info(ds_syn)
     config = build_config(min_period, max_period)
-    event = ds_obs.event[0]
+    event = ds_obs.events[0]
 
     # the kernel function
     def process(gp_obs, gp_syn):
