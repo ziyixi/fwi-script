@@ -49,13 +49,14 @@ def work(asdf_file, logfile, output_file):
     command = f"cp {asdf_file} {output_file}"
     subprocess.call(command, shell=True)
 
-    ds = pyasdf.ASDFDataSet(output_file)
-    logger.add(logfile, format="{time} {level} {message}", level="INFO")
-    logger.info(f"start to process {output_file}")
+    # ds = pyasdf.ASDFDataSet(output_file)
+    with pyasdf.ASDFDataSet(output_file) as ds:
+        logger.add(logfile, format="{time} {level} {message}", level="INFO")
+        logger.info(f"start to process {output_file}")
 
-    remove_stations(ds)
-    logger.success("finish removing missing stations")
-    del ds
+        remove_stations(ds)
+        logger.success("finish removing missing stations")
+    # del ds
 
 
 @click.command()
