@@ -74,8 +74,8 @@ def run(ds_obs, ds_syn):
 
             # log
             component = ["R", "T", "Z"][index]
-            logger.info(
-                f"station {stationxml[0].code}.{stationxml[0][0].code} component {component} picked {len(windows)} windows")
+            # logger.info(
+            #     f"station {stationxml[0].code}.{stationxml[0][0].code} component {component} picked {len(windows)} windows")
 
             if not windows:
                 continue

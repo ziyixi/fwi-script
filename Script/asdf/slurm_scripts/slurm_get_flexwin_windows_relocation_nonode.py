@@ -16,8 +16,8 @@ N_iters = 81
 PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
 OBS_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/processed_simple"
 SYN_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/processed"
-OUTPUT_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/windows_nonode"
-logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/windows_nonode.log"
+OUTPUT_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/windows"
+logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/windows.log"
 min_periods = "10,20,40"
 max_periods = "120,120,120"
 depths = "-16,-12,-8,-4,0,4,8,12,16"
@@ -82,7 +82,7 @@ def get_scripts():
 
 
 def submit_job(thecommand):
-    s = Slurm("flexwin", {"ntasks": N_cores,
+    s = Slurm("flexwin", {"nodes": "10-40", "ntasks": N_cores,
                           "time": "06:00:00", "cpus-per-task": 1, "mem-per-cpu": "2G"})
     s.run(thecommand)
 
