@@ -10,6 +10,8 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 isroot = (rank == 0)
 
+# ! There may be possibility that the npts for obs/syn are not the same
+
 
 def get_asdf_info(ds):
     waveform_list = ds.waveforms.list()
