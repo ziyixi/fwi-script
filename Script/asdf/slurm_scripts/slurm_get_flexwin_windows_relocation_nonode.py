@@ -75,14 +75,14 @@ def get_scripts():
                 continue
             thekey = runfile_keys[offset]
             obs_path, syn_path, out_path = runfile_pairs[thekey]
-            result += f"srun -N1-20 -n {N_cores_each_node} {PY} ../get_info/get_flexwin_windows.py --obs_path {obs_path} --syn_path {syn_path} --out_path {out_path} --logfile {logfile} &"
+            result += f"srun -N1-40 -n {N_cores_each_node} {PY} ../get_info/get_flexwin_windows.py --obs_path {obs_path} --syn_path {syn_path} --out_path {out_path} --logfile {logfile} &"
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
     return result
 
 
 def submit_job(thecommand):
-    s = Slurm("flexwin", {"ntasks": N_cores,
+    s = Slurm("flexwin", {"nodes": "1-40", "ntasks": N_cores,
                           "time": "06:00:00", "cpus-per-task": 1, "mem-per-cpu": "2G"})
     s.run(thecommand)
 
