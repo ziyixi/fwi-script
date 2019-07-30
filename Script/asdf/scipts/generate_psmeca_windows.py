@@ -16,4 +16,4 @@ for item in raw:
         if(key == winkey):
             item[2] = win[1]
 
-np.savetxt("./25d0.psmeca")
+np.savetxt("./25d0.psmeca", raw)
