@@ -14,16 +14,17 @@ def load_pickle(fname):
 
 def main():
     allfiles = glob(join(basedir, "*pkl"))
-    for fpath in allfiles:
-        fname = basename(fpath)[:-4]
-        data = load_pickle(fpath)
-        num_windows = 0
-        len_windows = 0
-        for key in data:
-            for channel in data[key]:
-                num_windows += len(channel)
-        num_windows = num_windows/len(data.keys())
-        f.write(f"{fname} {num_windows} \n")
+    with open(output, "w") as g:
+        for fpath in allfiles:
+            fname = basename(fpath)[:-4]
+            data = load_pickle(fpath)
+            num_windows = 0
+            len_windows = 0
+            for key in data:
+                for channel in data[key]:
+                    num_windows += len(channel)
+            num_windows = num_windows/len(data.keys())
+            g.write(f"{fname} {num_windows} \n")
 
 
 if __name__ == "__main__":
