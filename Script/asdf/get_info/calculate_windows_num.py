@@ -8,7 +8,7 @@ output = "/mnt/ls15/scratch/users/xiziyi/process_asdf/logs/windows_num.txt"
 
 def load_pickle(fname):
     with open(fname, "rb") as f:
-        data = pickle.load(fname)
+        data = pickle.load(f)
     return data
 
 
