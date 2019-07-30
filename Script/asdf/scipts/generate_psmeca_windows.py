@@ -16,4 +16,11 @@ for item in raw:
         if(key == winkey):
             item[2] = win[1]
 
-np.savetxt("./25d0.psmeca", raw, dtype=str)
+# np.savetxt("./25d0.psmeca", raw, dtype=str)
+with open("./25d0.psmeca", "w") as f:
+    for item in raw:
+        line = ""
+        for each in item:
+            line += f"{each} "
+        line += "\n"
+        f.write(line)
