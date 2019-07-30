@@ -2,8 +2,8 @@ from glob import glob
 from os.path import join, basename
 import pickle
 
-basedir = "/mnt/ls15/scratch/users/xiziyi/process_asdf/windows_10s"
-output = "/mnt/ls15/scratch/users/xiziyi/process_asdf/logs/windows_num.txt"
+basedir = "/mnt/ls15/scratch/users/xiziyi/process_asdf/windows_20s"
+output = "/mnt/ls15/scratch/users/xiziyi/process_asdf/logs/windows_num_20.txt"
 
 
 def load_pickle(fname):
