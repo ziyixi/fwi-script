@@ -1,7 +1,7 @@
 import numpy as np
 
 raw = np.loadtxt("./psmeca_gcmts.25.log", dtype=str)
-windows = "/mnt/ls15/scratch/users/xiziyi/process_asdf/logs/windows_num.txt"
+windows = "/mnt/ls15/scratch/users/xiziyi/process_asdf/logs/windows_num_20.txt"
 new = np.loadtxt(windows, dtype=str)
 
 # for win in new:
@@ -17,7 +17,7 @@ for item in raw:
             item[2] = win[1]
 
 # np.savetxt("./25d0.psmeca", raw, dtype=str)
-with open("./25d0.psmeca", "w") as f:
+with open("./25d0.psmeca_20", "w") as f:
     for item in raw:
         line = ""
         for each in item:
