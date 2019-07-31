@@ -26,7 +26,7 @@ def write_single(thefile, ref_file):
     file_obj.close()
     file_path = file_obj.name
     # calculate the pkl info.
-    command = f"mpirun -np 1 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
+    command = f"mpirun -np 36 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
     subprocess.call(command, shell=True)
     return file_path
 
@@ -46,14 +46,14 @@ def kernel(each_file):
 @click.option('--main_dir', required=True, type=str, help="the directory storing all simplified data asdf file")
 def main(main_dir):
     all_files = get_all_files(main_dir)
-#     ref_file = get_ref_file(all_files)
-#     for each_file in tqdm.tqdm(all_files):
-#         ref_file = each_file
-#         pkl_file = write_single(each_file, ref_file)
-#         read_single(pkl_file, ref_file, each_file)
+    # ref_file = get_ref_file(all_files)
+    for each_file in tqdm.tqdm(all_files):
+        ref_file = each_file
+        pkl_file = write_single(each_file, ref_file)
+        read_single(pkl_file, ref_file, each_file)
 
-    with Pool(36) as p:
-        r = list(tqdm.tqdm(p.imap(kernel, all_files), total=len(all_files)))
+    # with Pool(36) as p:
+    #     r = list(tqdm.tqdm(p.imap(kernel, all_files), total=len(all_files)))
 
 
 if __name__ == "__main__":
