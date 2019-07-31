@@ -7,3 +7,7 @@ others/.ipynb_checkpoints/
 Script/asdf/benchmark/.ipynb_checkpoints
 Script/asdf/benchmark/data
 Script/asdf/benchmark/HA.JY
+*h5
+*SAC
+*sac
+Script/asdf/benchmark/data_raw/*

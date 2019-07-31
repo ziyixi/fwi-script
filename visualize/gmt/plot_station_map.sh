@@ -15,7 +15,7 @@ gmt begin stations png,pdf,eps
 
     gmt set FONT_LABEL 6p,20 MAP_LABEL_OFFSET 4p
     gmt coast -JD125/35/30/40/7.0i -R70/180/0/70 -G244/243/239 -S167/194/223 -Bxafg -Byafg -Lg85/11+o-0.3c/0.0c+c11+w900k+f+u+l'scale'
-    gmt psxy -St0.07c -C$CPT ../data/station_contribution
+    gmt psxy -St0.07c -C$CPT ./stwin_stations
 
     # echo 145 30 328 3200 | gmt plot -S=0.2i -Wthin,red,..-
     # echo 140 36.4 250 3200 | gmt plot -S=0.2i -Wthin,red,..-
