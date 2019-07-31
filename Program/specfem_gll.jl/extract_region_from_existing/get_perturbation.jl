@@ -21,13 +21,9 @@ end
 function main()
     # parse args
     parsed_args = parse_command_line()
-    @info 1
     target_basedir = parsed_args["target_basedir"]
-    @info 2
-    reference_basedir = parse_args["reference_basedir"]
-    @info 3
+    reference_basedir = parsed_args["reference_basedir"]
     output_basedir = parsed_args["output_basedir"]
-    @info 4
     nproc = parse(Int64, parsed_args["nproc"])
     # get nspec
     mesh_info = sem_mesh_read(target_basedir, 0)
