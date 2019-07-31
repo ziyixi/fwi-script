@@ -7,7 +7,7 @@ from glob import glob
 from os.path import join
 import click
 import tqdm
-from multiprocessing import Pool
+# from multiprocessing import Pool
 
 PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
 
@@ -26,7 +26,7 @@ def write_single(thefile, ref_file):
     file_obj.close()
     file_path = file_obj.name
     # calculate the pkl info.
-    command = f"mpirun -np 36 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
+    command = f"mpirun -np 1 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
     subprocess.call(command, shell=True)
     return file_path
 
@@ -52,8 +52,8 @@ def main(main_dir):
         pkl_file = write_single(each_file, ref_file)
         read_single(pkl_file, ref_file, each_file)
 
-    # with Pool(36) as p:
-    #     r = list(tqdm.tqdm(p.imap(kernel, all_files), total=len(all_files)))
+    with Pool(36) as p:
+        r = list(tqdm.tqdm(p.imap(kernel, all_files), total=len(all_files)))
 
 
 if __name__ == "__main__":
