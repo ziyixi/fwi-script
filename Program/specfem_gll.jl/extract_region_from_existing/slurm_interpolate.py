@@ -15,4 +15,5 @@ command1 = f"ibrun julia ./src/program/xsem_interp_mesh2.jl --nproc_old {nproc_o
 s = Slurm("interp", {"partition": "skx-normal",
                      "nodes": 7, "ntasks": 324, "time": "02:00:00", "account": "TG-EAR140030"})
 
-s.run(f"cd ..; date; {command1}; date;")
+s.run(
+    f"cd /work/05880/tg851791/stampede2/fwi-script/Program/specfem_gll.jl; date; {command1}; date;")
