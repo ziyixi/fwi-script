@@ -29,5 +29,5 @@ function main()
     mesh_info=sem_mesh_read(target_basedir,0)
     nspec=mesh_info.nspec
     # run generate_perturbation
-    generate_perturbation(target_basedir, reference_basedir, output_basedir, nproc, nspec:)
+    generate_perturbation(target_basedir, reference_basedir, output_basedir, nproc, nspec)
 end
