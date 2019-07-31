@@ -23,6 +23,7 @@ function main()
     parsed_args = parse_command_line()
     @show parsed_args["target_basedir"]
     target_basedir = parsed_args["target_basedir"]
+    @show target_basedir
     reference_basedir = parse_args["reference_basedir"]
     output_basedir = parsed_args["output_basedir"]
     nproc = parsed_args["nproc"]
