@@ -36,6 +36,12 @@ def read_single(pkl_file, ref_file, thefile):
     subprocess.call(command, shell=True)
 
 
+def kernel(each_file):
+    ref_file = each_file
+    pkl_file = write_single(each_file, ref_file)
+    read_single(pkl_file, ref_file, each_file)
+
+
 @click.command()
 @click.option('--main_dir', required=True, type=str, help="the directory storing all simplified data asdf file")
 def main(main_dir):
@@ -46,10 +52,6 @@ def main(main_dir):
 #         pkl_file = write_single(each_file, ref_file)
 #         read_single(pkl_file, ref_file, each_file)
 
-    def kernel(each_file):
-        ref_file = each_file
-        pkl_file = write_single(each_file, ref_file)
-        read_single(pkl_file, ref_file, each_file)
     with Pool(36) as p:
         r = list(tqdm.tqdm(p.imap(kernel, all_files), total=len(all_files)))
 
