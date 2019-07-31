@@ -7,7 +7,7 @@ function parse_commandline()
     3) the new_model is used as the background model where the
     old mesh doesn't cover""")
     @add_arg_table s begin
-        --nproc_old"
+        "--nproc_old"
         help = "number of slices of the old mesh"
         arg_type = Int64
         required = true
