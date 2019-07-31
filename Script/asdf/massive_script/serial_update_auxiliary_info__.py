@@ -7,7 +7,7 @@ from glob import glob
 from os.path import join
 import click
 import tqdm
-
+from multiprocessing import Pool
 
 PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
 
@@ -40,10 +40,18 @@ def read_single(pkl_file, ref_file, thefile):
 @click.option('--main_dir', required=True, type=str, help="the directory storing all simplified data asdf file")
 def main(main_dir):
     all_files = get_all_files(main_dir)
-    ref_file = get_ref_file(all_files)
-    for each_file in tqdm.tqdm(all_files):
+#     ref_file = get_ref_file(all_files)
+#     for each_file in tqdm.tqdm(all_files):
+#         ref_file = each_file
+#         pkl_file = write_single(each_file, ref_file)
+#         read_single(pkl_file, ref_file, each_file)
+
+    def kernel(each_file):
+        ref_file = each_file
         pkl_file = write_single(each_file, ref_file)
         read_single(pkl_file, ref_file, each_file)
+    with Pool(36) as p:
+        r = list(tqdm.tqdm(p.imap(kernel, all_files), total=len(all_files)))
 
 
 if __name__ == "__main__":
