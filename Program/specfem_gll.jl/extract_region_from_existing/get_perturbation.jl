@@ -31,3 +31,5 @@ function main()
     # run generate_perturbation
     generate_perturbation(target_basedir, reference_basedir, output_basedir, nproc, nspec)
 end
+
+main()
