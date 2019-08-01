@@ -65,10 +65,6 @@ def setup_structure(wbase, sbase, specfem, taogll, mingll):
           join(wbase, "model", "s362ani_bad_gll"))
     sh.ln("-s", join(wbase, "specfem", "s362ani_good", "DATABASES_MPI"),
           join(wbase, "model", "s362ani_good_gll"))
-    sh.ln("-s", join(wbase, "specfem", "s362ani_bad_min", "DATABASES_MPI"),
-          join(wbase, "model", "s362ani_bad_min"))
-    sh.ln("-s", join(wbase, "specfem", "s362ani_bad_tao", "DATABASES_MPI"),
-          join(wbase, "model", "s362ani_bad_tao"))
 
     sh.mkdir("-p", join(wbase, "control_file"))
     sh.ln("-s", join(wbase, "specfem", "s362ani_bad", "DATABASES_MPI"),

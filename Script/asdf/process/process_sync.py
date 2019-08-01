@@ -84,16 +84,11 @@ def process_single_event(min_periods, max_periods, asdf_filename, waveform_lengt
                 raise Exception("unknown status code")
             st.trim(event_time, event_time+waveform_length)
 
-            st.detrend("linear")
             st.detrend("demean")
+            st.detrend("linear")
             st.taper(max_percentage=0.05, type="hann")
 
             sync_remove_response(pre_filt, st)
-
-            # this is not included by Dr. Chen's script
-            st.detrend("linear")
-            st.detrend("demean")
-            st.taper(max_percentage=0.05, type="hann")
 
             st.interpolate(sampling_rate=sampling_rate)
 
