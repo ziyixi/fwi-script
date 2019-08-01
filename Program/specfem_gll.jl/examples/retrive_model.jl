@@ -22,12 +22,14 @@ function main()
     # parse args
     parsed_args = parse_command_line()
     target_basedir = parsed_args["target_basedir"]
-    reference_basedir = parse_args["reference_basedir"]
+    reference_basedir = parsed_args["reference_basedir"]
     output_basedir = parsed_args["output_basedir"]
-    nproc = parsed_args["nproc"]
+    nproc = parse(Int64, parsed_args["nproc"])
     # get nspec
     mesh_info = sem_mesh_read(target_basedir, 0)
     nspec = mesh_info.nspec
     # run generate_perturbation
     generate_real(target_basedir, reference_basedir, output_basedir, nproc, nspec)
 end
+
+main()
