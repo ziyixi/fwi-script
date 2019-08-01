@@ -26,7 +26,7 @@ function main()
     output_basedir = parsed_args["output_basedir"]
     nproc = parse(Int64, parsed_args["nproc"])
     # get nspec
-    mesh_info = sem_mesh_read(target_basedir, 0)
+    mesh_info = sem_mesh_read(reference_basedir, 0)
     nspec = mesh_info.nspec
     # run generate_perturbation
     generate_real(target_basedir, reference_basedir, output_basedir, nproc, nspec)
