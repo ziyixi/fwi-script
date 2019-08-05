@@ -105,8 +105,8 @@ def main(obs_path, ref_path, pkl_path):
             for line in stations:
                 station = line[0]
                 network = line[1]
-                stla = line[2]
-                stlo = line[3]
+                stla = float(line[2])
+                stlo = float(line[3])
                 stations_mapper[(network, station)] = (stla, stlo)
 
             # kernel function
