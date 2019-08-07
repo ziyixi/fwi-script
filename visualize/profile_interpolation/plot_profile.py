@@ -114,7 +114,7 @@ def main(lon1, lon2, lat1, lat2, dep1, dep2, data, parameter, hnpts, vnpts):
     mindep = min(dep1, dep2)
     maxdep = max(dep1, dep2)
     data_pd = data_pd_raw.loc[(data_pd_raw.lat <= maxlat) & (
-        data_pd_raw.lat >= minlat) & (data_pd_raw.lon < maxlon) & (data_pd_raw.lon > minlon) & (data_pd_raw.dep >= mindep) & (data_pd_raw.dep <= maxdep)]
+        data_pd_raw.lat >= minlat) & (data_pd_raw.lon <= maxlon) & (data_pd_raw.lon >= minlon) & (data_pd_raw.dep >= mindep) & (data_pd_raw.dep <= maxdep)]
 
     x_mesh, y_mesh, z_mesh, value_mesh = prepare_data(data_pd, parameter)
     lons_plot, lats_plot, deps_plot = generate_vertical_profile_grids(
