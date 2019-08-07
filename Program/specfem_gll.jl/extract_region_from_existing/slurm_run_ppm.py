@@ -6,7 +6,7 @@ old_mesh_dir = "/work/05880/tg851791/stampede2/japan_slab/gll_models/smaller_reg
 old_model_dir = "/work/05880/tg851791/stampede2/japan_slab/gll_models/smaller_region/perturbation/per_fwea18_fwea18_ref"
 model_tags = "vpv,vph,vsv,vsh,eta,qmu,rho"
 output_file = "/work/05880/tg851791/stampede2/japan_slab/gll_models/smaller_region/models_for_plot/per_fwea18_fwea18_ref"
-region = "122/24/147/49/0/800/"
+region = "122/24/147/49/0/800"
 npts = "501/501/161"
 nproc = "18/18"
 
