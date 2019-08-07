@@ -18,6 +18,6 @@ command += f"ibrun julia src/program/get_ppm_model.jl --nproc_old {nproc_old} --
 command += "date;"
 
 s = Slurm("interp", {"partition": "skx-normal",
-                     "nodes": 10, "ntasks": 324, "time": "02:00:00", "account": "TG-EAR140030"})
+                     "nodes": 10, "ntasks": 324, "time": "04:00:00", "account": "TG-EAR140030"})
 
 s.run(command)

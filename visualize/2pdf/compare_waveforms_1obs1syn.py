@@ -10,8 +10,6 @@ import click
 
 to_plot_trace = recordtype("to_plot_trace", [
                            "obs_z", "syn_z",  "obs_r", "syn_r",  "obs_t", "syn_t", "win_z", "win_r", "win_t", "info"])
-plotting_order_structure = recordtype("plotting_order_structure",
-                                      ["to_plot_traces", "label"])
 
 
 def build_to_plot_traces(obs_ds, syn_ds, windows):
@@ -78,3 +76,27 @@ def build_plottting_structure(plot_traces, azimuth_width):
     for index_azimuth in range(num_azimuths):
         result[index_azimuth] = sorted(result[index_azimuth], key=sort_func)
     return result
+
+
+def main(obs_asdf, syn_asdf, window_path, azimuth_width, output_pdf, waves_perpage):
+    obs_ds = pyasdf.ASDFDataSet(obs_asdf, mode="r")
+    syn_ds = pyasdf.ASDFDataSet(syn_asdf, mode="r")
+    windows = np.loadtxt(window_path, dtype=str)
+
+    plot_traces = build_to_plot_traces(obs_ds, syn_ds, windows)
+    plotting_structure = build_plottting_structure(plot_traces, azimuth_width)
+
+    # plot figures
+    pdf = matplotlib.backends.backend_pdf.PdfPages(output_pdf)
+    figs = plt.figure()
+
+    num_azimuths = 360//azimuth_width
+    for index_azimuth in range(num_azimuths):
+        # for each azimuth bin
+        azimuth_bin_plot_traces = plotting_structure[index_azimuth]
+        num_azimuth_bin_plot_traces = len(azimuth_bin_plot_traces)
+        # get num_page for this azimuth bin
+        if(num_azimuth_bin_plot_traces % waves_perpage == 0):
+            num_page = num_azimuth_bin_plot_traces // waves_perpage
+        else:
+            num_page = (num_azimuth_bin_plot_traces // waves_perpage)+1
