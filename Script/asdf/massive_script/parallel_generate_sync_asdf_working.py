@@ -5,7 +5,7 @@ from functools import partial
 import multiprocessing
 import sys
 sys.path.append("..")
-from generate.sync2asdf_specfem import convert_sync_to_asdf
+from generate.sync2asdf_normal import convert_sync_to_asdf
 import numpy as np
 from os.path import join
 from glob import glob
