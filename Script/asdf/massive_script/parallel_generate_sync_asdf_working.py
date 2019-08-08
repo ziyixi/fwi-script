@@ -41,7 +41,7 @@ def kernel(each_dir, out_dir,cmt_dir):
 def main(base_dir, out_dir,cmt_dir):
     all_dirs = glob(join(base_dir, "*"))
     with multiprocessing.Pool(processes=48) as pool:
-        r=list(pool.imap(partial(kernel, out_dir=out_dir,cmt_dir=cmt_dir), all_dirs),total=len(all_dirs))
+        r=list(tqdm.tqdm(pool.imap(partial(kernel, out_dir=out_dir,cmt_dir=cmt_dir), all_dirs),total=len(all_dirs)))
 
 
 if __name__ == "__main__":
