@@ -3,13 +3,13 @@ generate asdf files from a relocation working directory.
 """
 from functools import partial
 import multiprocessing
+import sys
 sys.path.append("..")
 from generate.sync2asdf_specfem import convert_sync_to_asdf
 import numpy as np
 from os.path import join
 from glob import glob
 import click
-import sys
 import tqdm
 
 # from mpi4py import MPI
@@ -22,39 +22,26 @@ import tqdm
 # isroot = (rank == 0)
 
 
-def kernel(each_dir, out_dir):
-    print(f"start to handle {each_dir}")
+def kernel(each_dir, out_dir,cmt_dir):
+    # print(f"start to handle {each_dir}")
     split_path = each_dir.split("/")
-    event = split_path[-2]
-    depth = split_path[-1]
-    output_path = join(out_dir, f"sync_{event}_{depth}_raw.h5")
+    event = split_path[-1]
+    output_path = join(out_dir, f"sync_{event}_raw.h5")
+    cmt_path=join(cmt_dir,event)
     files_in_output = glob(join(out_dir, "*"))
     if(output_path in files_in_output):
         return
-    convert_sync_to_asdf(each_dir, output_path, True)
-    print(f"finish handling {each_dir}")
+    convert_sync_to_asdf(each_dir,cmt_path, output_path, True)
 
 
 @click.command()
 @click.option('--base_dir', required=True, type=str, help="the relocation working directory")
 @click.option('--out_dir', required=True, type=str, help="the asdf output directory")
-def main(base_dir, out_dir):
-    all_dirs = glob(join(base_dir, "*", "*"))
-#     for each_dir in all_dirs:
-#         print(f"start to handle {each_dir}")
-#         split_path = each_dir.split("/")
-#         event = split_path[-2]
-#         depth = split_path[-1]
-#         output_path = join(out_dir, f"sync_{event}_{depth}_raw.h5")
-#         files_in_output = glob(join(out_dir, "*"))
-#         if(output_path in files_in_output):
-#             continue
-
-#         convert_sync_to_asdf(each_dir, output_path, True)
-#         print(f"finish handling {each_dir}")
-
+@click.option('--cmt_dir', required=True, type=str, help="the cmt files directory")
+def main(base_dir, out_dir,cmt_dir):
+    all_dirs = glob(join(base_dir, "*"))
     with multiprocessing.Pool(processes=48) as pool:
-        pool.map(partial(kernel, out_dir=out_dir), all_dirs)
+        r=list(pool.imap(partial(kernel, out_dir=out_dir,cmt_dir=cmt_dir), all_dirs),total=len(all_dirs))
 
 
 if __name__ == "__main__":
