@@ -27,7 +27,7 @@ template = """.NAME ziyixi
 def create_mail_contents():
     mail_list = []
     events = obspy.read_events("./Japan_slab/*")
-    sh.mkdir("-p", "./mails_ziyixi")
+    sh.mkdir("-p", "./mails")
 
     stations = pd.read_csv(
         "./fdsn_stations",
@@ -62,7 +62,7 @@ def create_mail_contents():
             station_information=station_information,
         )
 
-        with open(f"./mails_ziyixi/{item.origins[0].resource_id.id.split('/')[2]}", "w") as f:
+        with open(f"./mails/{item.origins[0].resource_id.id.split('/')[2]}", "w") as f:
             f.write(mail_content)
 
 

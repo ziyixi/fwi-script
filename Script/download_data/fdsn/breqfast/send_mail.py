@@ -13,7 +13,7 @@
 import sys
 import time
 import random
-from smtplib import SMTP_SSL
+from smtplib import SMTP_SSL, SMTP
 from email.mime.text import MIMEText
 
 #  Hosts:
@@ -27,7 +27,7 @@ from email.mime.text import MIMEText
 #
 # Email accout, password, SMTP host and port
 sender = "ziyixi@mail.ustc.edu.cn"
-passwd = "******"
+passwd = ""
 host = "mail3.ustc.edu.cn"
 port = 465
 
