@@ -6,9 +6,7 @@ import obspy
 import click
 
 
-@click.command()
-@click.option('--asdf_file', required=True, type=str, help="asdf file path")
-def main(asdf_file):
+def kernel_rename(asdf_file):
     # ds = pyasdf.ASDFDataSet(asdf_file)
     with pyasdf.ASDFDataSet(asdf_file) as ds:
         station_list = ds.waveforms.list()
@@ -22,6 +20,12 @@ def main(asdf_file):
                 for wave in waves:
                     wave.stats.network = "BO"
                 ds.add_waveforms(waves, tag="sync", event_id=event)
+
+
+@click.command()
+@click.option('--asdf_file', required=True, type=str, help="asdf file path")
+def main(asdf_file):
+    kernel_rename(asdf_file)
 
 
 if __name__ == "__main__":
