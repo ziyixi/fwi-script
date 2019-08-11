@@ -1,5 +1,5 @@
 from glob import glob
-from os.path import join, basenmame
+from os.path import join, basename
 import subprocess
 
 alldir = "/mnt/research/seismolab2/japan_slab/cmts/Japan_slab"
