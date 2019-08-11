@@ -7,9 +7,9 @@ newdir = "/mnt/research/seismolab2/japan_slab/cmts/Japan_slab_from_used_EARA2014
 downloadeddir = "/mnt/research/seismolab2/japan_slab/data/data_fnet"
 
 downloaded = glob(join(downloadeddir, "*"))
-downloaded = [basenmame(item) for item in downloaded]
+downloaded = [basename(item) for item in downloaded]
 theall = glob(join(alldir, "*"))
-theall = [basenmame(item) for item in theall]
+theall = [basename(item) for item in theall]
 
 tocp = sorted(set(theall)-set(downloaded))
 for item in tocp:
