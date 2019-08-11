@@ -9,8 +9,8 @@ N_node = 20
 N_cores_each_node = 20
 
 # the base sync directory storing asdf files
-N_files = 270
-N_iters = 14
+N_files = 480  # 270
+N_iters = 24  # 14
 
 # some configuration
 PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
@@ -18,9 +18,9 @@ min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/process_sync.log"
-RAW_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/raw_sync"
-PROCESSED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/relocation/processed"
+logfile = "/mnt/research/seismolab2/japan_slab/sync/process_sync.log"
+RAW_DIR = "/mnt/research/seismolab2/japan_slab/sync/1run_before_relocation"
+PROCESSED_DIR = "/mnt/research/seismolab2/japan_slab/sync/1run_before_relocation_processed"
 
 
 def get_files(base_dir):
@@ -48,7 +48,7 @@ def get_scripts(run_files):
 
 def submit_job(thecommand):
     s = Slurm("process_sync", {"nodes": N_node, "ntasks": N_cores,
-                               "time": "06:00:00", "cpus-per-task": 1, "mem-per-cpu": "2G"})
+                               "time": "12:00:00", "cpus-per-task": 1, "mem-per-cpu": "2G"})
     s.run(thecommand)
 
 

@@ -26,9 +26,18 @@ from email.mime.text import MIMEText
 #  =========== ===================== ==========
 #
 # Email accout, password, SMTP host and port
-sender = "ziyixi@mail.ustc.edu.cn"
-passwd = ""
-host = "mail3.ustc.edu.cn"
+# sender = "xiziyi2011@foxmail.com"
+# sender_login = "xiziyi2011@foxmail.com"
+# passwd = "ycxanzsuazfpefcb"
+# host = "smtp.qq.com"
+# port = 465
+# sender = "ziyixi@mail.ustc.edu.cn"
+# passwd = "xyz386208391YHM"
+# host = "mail.ustc.edu.cn"
+# port = 465
+sender = "xiziyi2015@gmail.com"
+passwd = "1725726868"
+host = "smtp.gmail.com"
 port = 465
 
 # Email address of different earthquake data center
