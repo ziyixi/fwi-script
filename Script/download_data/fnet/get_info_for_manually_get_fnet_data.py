@@ -4,7 +4,6 @@ A script to get event list for manually get fnet data.
 import obspy
 import numpy as np
 import sys
-import pyperclip
 
 
 def get_download_dict(events):
@@ -25,7 +24,7 @@ def get_download_dict(events):
 def main():
     station_list = np.loadtxt("../data/fnet_stationlist", dtype=np.str)
     command = ""
-    events = obspy.read_events("../data/event_info.xml")
+    events = obspy.read_events("../data/Japan_slab/*")
     download_dict = get_download_dict(events)
     for key in download_dict:
         command += (
