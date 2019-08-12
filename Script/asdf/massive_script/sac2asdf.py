@@ -78,7 +78,7 @@ def _add_to_adsf_file(f, files, tag, verbose=False):
                       0.0)
             channel_information[tr.id] = coords
         except AttributeError:
-            raise(f"error in reading {filename}")
+            continue
 
         s, e = tr.stats.starttime, tr.stats.endtime
         if min_starttime is None or s < min_starttime:
