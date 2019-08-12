@@ -13,7 +13,7 @@ from functools import partial
 def kernel(gcmtid, tag, working_dir, output_dir):
     filename = join(output_dir, f"raw_{gcmtid}.h5")
     folder = join(working_dir, gcmtid)
-    add_to_asdf_file(filename=filename, folder=folder, tag=tag, verbose=False)
+    add_to_adsf_file(filename=filename, folder=folder, tag=tag, verbose=False)
 
 
 @click.command()
