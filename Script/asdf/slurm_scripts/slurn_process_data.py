@@ -5,8 +5,8 @@ from os.path import join
 from slurmpy import Slurm
 
 # some resources information
-N_cores = 300
-N_node = 15
+N_cores = 400
+N_node = 20
 N_cores_each_node = 20
 
 # the base sync directory storing asdf files
@@ -53,7 +53,7 @@ def get_scripts(run_files):
 
 def submit_job(thecommand):
     s = Slurm("process_data", {"nodes": N_node, "ntasks": N_cores,
-                               "time": "04:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
+                               "time": "12:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
     s.run(thecommand)
 
 
