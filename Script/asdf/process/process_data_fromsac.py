@@ -302,7 +302,7 @@ def remove_response_paz(st, paz_directory, pre_filt):
         # get key
         network = trace.stats.network
         station = trace.stats.station
-        channel = trace.channel
+        channel = trace.stats.channel
         key = f"{network}.{station}.{channel}"
         paz_path = join(paz_directory, key)
         # try to read paz
