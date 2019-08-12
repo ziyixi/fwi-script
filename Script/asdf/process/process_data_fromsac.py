@@ -11,6 +11,7 @@ from loguru import logger
 from obspy.geodetics.base import gps2dist_azimuth
 from pyasdf import ASDFDataSet
 import pandas as pd
+from obspy.signal.invsim import simulate_seismometer
 
 # TODO problems may be in "water level" somewhere
 
@@ -311,7 +312,7 @@ def remove_response_paz(st, paz_directory, pre_filt):
         except:
             return None
         # ndarray
-        data = obspy.signal.invsim.simulate_seismometer(
+        data = simulate_seismometer(
             trace.data, trace.stats.sampling_rate, paz_remove=trace.stats.paz, water_level=6e9, zero_mean=False, taper=False, pre_filt=pre_filt, sacsim=True)
         trace.data = data
     return st
