@@ -69,7 +69,7 @@ def _add_to_adsf_file(f, files, tag, verbose=False):
             if verbose:
                 print("Success.")
         except Exception:
-            print("\nFailed to read '%s' as a SAC file." % filename)
+            # print("\nFailed to read '%s' as a SAC file." % filename)
             continue
 
         # Get to coordinates if possible:
