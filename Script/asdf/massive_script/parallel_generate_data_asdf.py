@@ -22,7 +22,14 @@ def kernel(gcmtid, seed_dir, cmt_dir, output_dir, logfile):
 @click.option('--logfile', required=True, type=str)
 def main(seed_dir, cmt_dir, output_dir, logfile):
     all_dirs = glob(join(seed_dir, "*"))
+    # break in half, fix it
+    processed_dirs = glob(join(output_dir, "*"))
+    processed_cmtids = [basename(item).split(
+        ".")[0].split("_")[-1] for item in processed_dirs]
+
     all_cmtids = [basename(item) for item in all_dirs]
+    all_cmtids = sorted(set(all_cmtids)-set(processed_cmtids))
+
     with multiprocessing.Pool(processes=36) as pool:
         r = list(tqdm.tqdm(pool.imap(partial(kernel, seed_dir=seed_dir, cmt_dir=cmt_dir,
                                              output_dir=output_dir, logfile=logfile), all_cmtids), total=len(all_cmtids)))
