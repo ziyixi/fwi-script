@@ -4,6 +4,7 @@ from glob import glob
 from os.path import join, basename
 from seed2asdf import generate_asdf_for_single_event
 from functools import partial
+import click
 
 
 def kernel(gcmtid, seed_dir, cmt_dir, output_dir, logfile):
