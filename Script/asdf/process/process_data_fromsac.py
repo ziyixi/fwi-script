@@ -300,9 +300,9 @@ def remove_response_paz(st, paz_directory, pre_filt):
     """
     for trace in st:
         # get key
-        network = st.stats.network
-        station = st.stats.station
-        channel = st.channel
+        network = trace.stats.network
+        station = trace.stats.station
+        channel = trace.channel
         key = f"{network}.{station}.{channel}"
         paz_path = join(paz_directory, key)
         # try to read paz
