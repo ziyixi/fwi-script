@@ -4,7 +4,7 @@ convert sac files (different directories) to asdf files in parallel
 from glob import glob
 import click
 from os.path import join, basename
-from sac2pdf import add_to_adsf_file
+from sac2asdf import add_to_adsf_file
 import multiprocessing
 import tqdm
 from functools import partial
