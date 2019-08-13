@@ -10,8 +10,8 @@ N_node = 20
 N_cores_each_node = 20
 
 # the base sync directory storing asdf files
-N_files = 30
-N_iters = 2
+N_files = 284
+N_iters = 15
 
 # some configuration
 PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
@@ -19,10 +19,9 @@ min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/process_data.log"
-RAW_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/asdf_for_validation"
-PROCESSED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/processed"
-SIMPLED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_asdf/validation/processed_simple"
+logfile = "/mnt/ls15/scratch/users/xiziyi/process_data/process_data_284.log"
+RAW_DIR = "/mnt/research/seismolab2/japan_slab/data/asdf_all_284"
+PROCESSED_DIR = "/mnt/ls15/scratch/users/xiziyi/process_data/data_284"
 cea_correction_file = "../data/cmpaz_segment.txt"
 
 
