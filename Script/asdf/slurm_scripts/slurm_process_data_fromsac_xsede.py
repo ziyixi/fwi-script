@@ -5,20 +5,20 @@ from os.path import join
 from slurmpy import Slurm
 
 # some resources information
-N_total = 8
-N_each = 4
-N_iter = 2
+N_total = 284
+N_each = 20
+N_iter = 15
 nproc = 24
 
 # some configuration
-PY = "/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
+PY = "/work/05880/tg851791/stampede2/anaconda3/envs/seismology/bin/python"
 min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/scratch/05880/tg851791/process_data/process_data_284_test.log"
-RAW_DIR = "/scratch/05880/tg851791/process_data/284_test"
-PROCESSED_DIR = "/scratch/05880/tg851791/process_data/284_test_processed"
+logfile = "/scratch/05880/tg851791/process_data/process_data_284.log"
+RAW_DIR = "/scratch/05880/tg851791/process_data/asdf_all_284"
+PROCESSED_DIR = "/scratch/05880/tg851791/process_data/all_284_processed"
 cea_correction_file = "../data/cmpaz_segment.txt"
 
 
@@ -28,8 +28,6 @@ def get_files(base_dir):
 
 def get_scripts(run_files):
     result = ""
-    result += "module remove python2/2.7.15; "
-    result += "module load mvapich2/2.3.1"
     # run iters
     for iiter in range(N_iter):
         result += f"echo 'start iteration {iiter}'; "
@@ -50,8 +48,8 @@ def get_scripts(run_files):
 def submit_job(thecommand):
     # s = Slurm("process_data", {"nodes": N_node, "ntasks": N_cores,
     #                            "time": "12:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
-    s = Slurm("process", {"nodes": 2, "ntasks": 96,
-                          "partition": 'skx-normal', "time": "01:00:00", "account": "TG-EAR140030"})
+    s = Slurm("process", {"nodes": 10, "ntasks": 480,
+                          "partition": 'skx-normal', "time": "12:00:00", "account": "TG-EAR140030"})
     s.run(thecommand)
 
 
