@@ -1,24 +1,24 @@
 import sys
 from glob import glob
-from os.path import join
+from os.path import join, basename
 
 from slurmpy import Slurm
 
 # some resources information
-N_total = 284
+N_total = 200
 N_each = 20
-N_iter = 15
+N_iter = 10
 nproc = 24
 
 # some configuration
-PY = "/work/05880/tg851791/stampede2/anaconda3/envs/seismology/bin/python"
+PY = "/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
 min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/scratch/05880/tg851791/process_data/process_data_284.log"
-RAW_DIR = "/scratch/05880/tg851791/process_data/asdf_all_284"
-PROCESSED_DIR = "/scratch/05880/tg851791/process_data/all_284_processed"
+logfile = "/scratch/05880/tg851791/process_data/process_data_200.log"
+RAW_DIR = "/scratch/05880/tg851791/process_data/asdf_raw_EARA2014"
+PROCESSED_DIR = "/scratch/05880/tg851791/process_data/all_200_processed"
 cea_correction_file = "../data/cmpaz_segment.txt"
 
 
@@ -28,6 +28,8 @@ def get_files(base_dir):
 
 def get_scripts(run_files):
     result = ""
+    result += "module remove python2/2.7.15; "
+    result += "module load mvapich2/2.3.1; "
     # run iters
     for iiter in range(N_iter):
         result += f"echo 'start iteration {iiter}'; "
@@ -37,8 +39,11 @@ def get_scripts(run_files):
             if(ievent >= N_total):
                 continue
             filename = run_files[ievent]
+            filename_basename = basename(filename)
+            gcmtid = filename_basename.split(".")[0].split("_")[-1]
+            paz_path = join(paz_directory, gcmtid, "PZ")
             inc = ieach*nproc
-            result += f"ibrun -n {nproc} -o {inc} {PY} ../process/process_data.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} --correct_cea --cea_correction_file {cea_correction_file} &"
+            result += f"ibrun -n {nproc} -o {inc} {PY} ../process/process_data_fromsac.py --min_periods {min_periods} --max_periods {max_periods} --asdf_filename {filename} --waveform_length {waveform_length} --sampling_rate {sampling_rate} --output_directory {PROCESSED_DIR} --logfile {logfile} --no-correct_cea --cea_correction_file {cea_correction_file} --paz_directory {paz_path} &"
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
 
