@@ -5,9 +5,9 @@ from os.path import join, basename
 from slurmpy import Slurm
 
 # some resources information
-N_total = 200
-N_each = 20
-N_iter = 10
+N_total = 4
+N_each = 4
+N_iter = 1
 nproc = 24
 
 # some configuration
@@ -16,9 +16,9 @@ min_periods = "10,20,40"
 max_periods = "120,120,120"
 waveform_length = 2340
 sampling_rate = 10
-logfile = "/scratch/05880/tg851791/process_data/process_data_200.log"
-RAW_DIR = "/scratch/05880/tg851791/process_data/asdf_raw_EARA2014"
-PROCESSED_DIR = "/scratch/05880/tg851791/process_data/all_200_processed"
+logfile = "/scratch/05880/tg851791/process_data/process_data_200_test.log"
+RAW_DIR = "/scratch/05880/tg851791/process_data/200_test"
+PROCESSED_DIR = "/scratch/05880/tg851791/process_data/200_test_processed"
 cea_correction_file = "../data/cmpaz_segment.txt"
 paz_directory = "/scratch/05880/tg851791/pazs_EARA/pazs_EARA2014"
 
@@ -54,8 +54,8 @@ def get_scripts(run_files):
 def submit_job(thecommand):
     # s = Slurm("process_data", {"nodes": N_node, "ntasks": N_cores,
     #                            "time": "12:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
-    s = Slurm("process", {"nodes": 10, "ntasks": 480,
-                          "partition": 'skx-normal', "time": "12:00:00", "account": "TG-EAR140030"})
+    s = Slurm("process", {"nodes": 2, "ntasks": 96,
+                          "partition": 'skx-normal', "time": "01:00:00", "account": "TG-EAR140030"})
     s.run(thecommand)
 
 
