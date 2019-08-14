@@ -29,7 +29,7 @@ def get_files(base_dir):
 def get_scripts(run_files):
     result = ""
     result += "module remove python2/2.7.15; "
-    result += "module load mvapich2/2.3.1"
+    result += "module load mvapich2/2.3.1; "
     # run iters
     for iiter in range(N_iter):
         result += f"echo 'start iteration {iiter}'; "
