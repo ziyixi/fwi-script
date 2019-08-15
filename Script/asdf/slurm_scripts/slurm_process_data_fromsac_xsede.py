@@ -55,7 +55,7 @@ def submit_job(thecommand):
     # s = Slurm("process_data", {"nodes": N_node, "ntasks": N_cores,
     #                            "time": "12:00:00", "cpus-per-task": 1, "mem-per-cpu": "4G"})
     s = Slurm("process", {"nodes": 10, "ntasks": 480,
-                          "partition": 'skx-normal', "time": "12:00:00", "account": "TG-EAR140030"})
+                          "partition": 'skx-normal', "time": "01:00:00", "account": "TG-EAR140030"})
     s.run(thecommand)
 
 
