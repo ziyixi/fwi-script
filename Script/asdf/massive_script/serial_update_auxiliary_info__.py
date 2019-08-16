@@ -27,7 +27,7 @@ def write_single(thefile, ref_file):
     file_obj.close()
     file_path = file_obj.name
     # calculate the pkl info.
-    command = f"mpirun -np 68 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
+    command = f"mpirun -np 48 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
     subprocess.call(command, shell=True)
     return file_path
 
