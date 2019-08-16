@@ -9,7 +9,7 @@ import click
 import tqdm
 # from multiprocessing import Pool
 
-PY = "/mnt/home/xiziyi/anaconda3/envs/seismology/bin/python"
+PY = "/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
 
 
 def get_all_files(main_dir):
@@ -26,7 +26,7 @@ def write_single(thefile, ref_file):
     file_obj.close()
     file_path = file_obj.name
     # calculate the pkl info.
-    command = f"mpirun -np 36 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
+    command = f"mpirun -np 48 {PY} ../process/write_auxiliary_info2file.py --obs_path {thefile} --ref_path {ref_file} --pkl_path {file_path}"
     subprocess.call(command, shell=True)
     return file_path
 
