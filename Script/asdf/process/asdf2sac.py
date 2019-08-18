@@ -14,6 +14,10 @@ def convert_single(asdf_path, out_dir, tag):
             for tr in st:
                 id = tr.id
                 out_path = join(out_dir, id)
+                # update sac info
+                tr.stats.sac = obspy.core.util.attribdict.AttribDict()
+                tr.stats.sac["stla"] = ds.waveforms[item].StationXML[0][0].latitude
+                tr.stats.sac["stlo"] = ds.waveforms[item].StationXML[0][0].longitude
                 tr.write(out_path, format="SAC")
 
 

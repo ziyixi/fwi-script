@@ -26,25 +26,25 @@ def get_asdf_info(ds):
 
 
 def build_config(min_period, max_period):
-    config = pyflex.Config(
+    config_zr = pyflex.Config(
         min_period=min_period, max_period=max_period,
-        stalta_waterlevel=0.11,
-        tshift_acceptance_level=15.0,
-        dlna_acceptance_level=2.5,
-        cc_acceptance_level=0.6,
-        c_0=0.7, c_1=2.0, c_2=0.0, c_3a=1.0,
-        c_3b=2.0, c_4a=3.0, c_4b=10.0,
-        s2n_limit=0.5,
-        max_time_before_first_arrival=-50.0,
-        min_surface_wave_velocity=3.5,
-        window_signal_to_noise_type="energy")
-    return config
+        stalta_waterlevel=0.10, tshift_acceptance_level=15.0,
+        dlna_acceptance_level=1.0, cc_acceptance_level=0.75,
+        c_0=0.7, c_1=4.0, c_2=0.0, c_3a=1.0, c_3b=2.0, c_4a=3.0, c_4b=10.0, min_surface_wave_velocity=3.5,
+        window_signal_to_noise_type="energy", check_global_data_quality=False)
+    config_t = pyflex.Config(
+        min_period=min_period, max_period=max_period,
+        stalta_waterlevel=0.15, tshift_acceptance_level=15.0,
+        dlna_acceptance_level=1.0, cc_acceptance_level=0.75,
+        c_0=0.7, c_1=4.0, c_2=0.0, c_3a=1.0, c_3b=2.0, c_4a=3.0, c_4b=10.0, min_surface_wave_velocity=3.5,
+        window_signal_to_noise_type="energy", check_global_data_quality=False)
+    return config_zr, config_t
 
 
 def run(ds_obs, ds_syn):
     thetag_obs, min_period, max_period = get_asdf_info(ds_obs)
     thetag_syn, _, _ = get_asdf_info(ds_syn)
-    config = build_config(min_period, max_period)
+    config_zr, config_t = build_config(min_period, max_period)
     event = ds_obs.events[0]
 
     # the kernel function
@@ -69,8 +69,14 @@ def run(ds_obs, ds_syn):
             # must have the same starttime
             syn.stats.starttime = obs.stats.starttime
 
-            windows = pyflex.select_windows(
-                obs, syn, config, event=event, station=stationxml)
+            if((index == 0) or (index == 2)):
+                # r or z
+                windows = pyflex.select_windows(
+                    obs, syn, config_zr, event=event, station=stationxml)
+            elif(index == 1):
+                # t
+                windows = pyflex.select_windows(
+                    obs, syn, config_t, event=event, station=stationxml)
 
             # log
             component = ["R", "T", "Z"][index]
