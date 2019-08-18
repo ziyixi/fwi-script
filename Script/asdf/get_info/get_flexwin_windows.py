@@ -69,14 +69,18 @@ def run(ds_obs, ds_syn):
             # must have the same starttime
             syn.stats.starttime = obs.stats.starttime
 
-            if((index == 0) or (index == 2)):
-                # r or z
-                windows = pyflex.select_windows(
-                    obs, syn, config_zr, event=event, station=stationxml)
-            elif(index == 1):
-                # t
-                windows = pyflex.select_windows(
-                    obs, syn, config_t, event=event, station=stationxml)
+            try:
+                if((index == 0) or (index == 2)):
+                    # r or z
+                    windows = pyflex.select_windows(
+                        obs, syn, config_zr, event=event, station=stationxml)
+                elif(index == 1):
+                    # t
+                    windows = pyflex.select_windows(
+                        obs, syn, config_t, event=event, station=stationxml)
+            except:
+                # there are possibility some traces have problem
+                continue
 
             # log
             component = ["R", "T", "Z"][index]
