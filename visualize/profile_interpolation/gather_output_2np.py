@@ -32,7 +32,7 @@ def main(base_dir, region, npts, nproc, parameters, out_dir):
     dlat = (maxlat-minlat)/(nlat-1)
     ddep = (maxdep-mindep)/(ndep-1)
     parameters_list = parameters.split(",")
-
+    print(parameters_list)
     save_arrays_list = [np.zeros(nlon, nlat, ndep)
                         for i in range(len(parameters_list))]
 
