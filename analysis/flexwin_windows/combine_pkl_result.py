@@ -28,3 +28,7 @@ def main():
 
     with open(outpath, "wb") as handle:
         pickle.dump(result, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+if __name__ == "__main__":
+    main()
