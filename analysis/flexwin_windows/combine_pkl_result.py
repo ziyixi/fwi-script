@@ -23,7 +23,7 @@ def main():
     allfiles = glob(join(basedir, f"*{process_flag}*"))
     allfnames = [basename(item) for item in allfiles]
     result = {}
-    for filename, fname in tqdm.tqdm(zip(allfiles, allfnames), total=len(filename)):
+    for filename, fname in tqdm.tqdm(zip(allfiles, allfnames), total=len(allfiles)):
         gcmtid = fname.split(".")[0]
         result[gcmtid] = read_single_file(filename)
 
