@@ -7,8 +7,8 @@ from glob import glob
 import tqdm
 
 basedir = "/scratch/05880/tg851791/process_windows/windows_0818"
-process_flag = "preprocessed_10s_to_120s"
-outpath = f"/scratch/05880/tg851791/process_windows/{process_flag}.log"
+process_flag = "preprocessed_20s_to_120s"
+outpath = f"/scratch/05880/tg851791/process_windows/{process_flag}.pkl"
 
 
 def read_single_file(filename):
