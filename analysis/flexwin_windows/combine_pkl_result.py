@@ -4,6 +4,7 @@ Combine all the pickle files
 import pickle
 from os.path import join, basename
 from glob import glob
+import tqdm
 
 basedir = "/scratch/05880/tg851791/process_windows/windows_0818"
 process_flag = "preprocessed_10s_to_120s"
@@ -22,7 +23,7 @@ def main():
     allfiles = glob(join(basedir, f"*{process_flag}*"))
     allfnames = [basename(item) for item in allfiles]
     result = {}
-    for filename, fname in zip(allfiles, allfnames):
+    for filename, fname in tqdm.tqdm(zip(allfiles, allfnames), total=len(filename)):
         gcmtid = fname.split(".")[0]
         result[gcmtid] = read_single_file(filename)
 
