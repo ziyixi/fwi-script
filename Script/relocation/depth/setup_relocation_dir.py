@@ -18,10 +18,19 @@ def generate_new_cmtsolution_files(cmts_dir, generated_cmts_dir, depth_perturbat
         # gcmt_id = event.resource_id.id.split("/")[-2]
         # there are some problems in changing names
         gcmt_id = cmt_file.split("/")[-1]
+        # consider the case when depth<20km
+        event_depth = obspy.read_events(cmt_file)[0].origins[0].depth
+        if(event_depth < 20000):
+            larger_than_0 = [i for i in depth_perturbation_list if i > 0]
+            larger_equal_0 = [i for i in depth_perturbation_list if i >= 0]
+            smaller_than_0 = np.linspace(
+                5000-event_depth, 0, len(larger_than_0)).tolist()
+            depth_perturbation_list = smaller_than_0+larger_equal_0
 
         # assume dirs like f"{generated_cmts_dir}/d-3" have already been created
         for depth_per in depth_perturbation_list:
-            generated_name = join(generated_cmts_dir, f"d{depth_per}", gcmt_id)
+            generated_name = join(generated_cmts_dir,
+                                  f"d{depth_per:.0f}", gcmt_id)
             # there are always problem in copy event, so here I'd like to read in the event again
             event_this_depth = obspy.read_events(cmt_file)[0]
             # event_this_depth = event.copy()
@@ -127,8 +136,8 @@ def setup_structure_after_generat_cmts(main_dir, output_dir, depth_perturbation_
 @click.option('--cmts_dir', required=True, help="the cmt solution directory", type=str)
 @click.option('--depth_perturbation', required=True, help="the depth perturbation, use somthing like -3,-1,5 (in km)", type=str)
 def main(main_dir, output_dir, ref_dir, cmts_dir, depth_perturbation):
-    depth_perturbation_list = [float(item)
-                               for item in depth_perturbation.split(",")]
+    depth_perturbation_list = sorted([float(item)
+                                      for item in depth_perturbation.split(",")])
     setup_basic_structure(main_dir, ref_dir, cmts_dir, depth_perturbation_list)
     generated_cmts_dir = join(main_dir, "cmts", "cmts_generated")
     working_cmts_dir = join(main_dir, "cmts", "cmts_raw")
