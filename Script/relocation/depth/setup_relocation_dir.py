@@ -28,6 +28,8 @@ def generate_new_cmtsolution_files(cmts_dir, generated_cmts_dir, depth_perturbat
             smaller_than_0 = (np.linspace(
                 5000-event_depth, 0, len(smaller_than_0))/1000).tolist()
             depth_perturbation_list_modified = smaller_than_0+larger_equal_0
+        if(depth_perturbation_list_modified == None):
+            depth_perturbation_list_modified = depth_perturbation_list
 
         # assume dirs like f"{generated_cmts_dir}/d-3" have already been created
         for index, depth_per in enumerate(depth_perturbation_list):
