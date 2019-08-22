@@ -26,7 +26,7 @@ def generate_new_cmtsolution_files(cmts_dir, generated_cmts_dir, depth_perturbat
             larger_equal_0 = [i for i in depth_perturbation_list if i >= 0]
             smaller_than_0 = [i for i in depth_perturbation_list if i < 0]
             smaller_than_0 = (np.linspace(
-                5000-event_depth, 0, len(smaller_than_0))/1000).tolist()
+                5000-event_depth, 0, len(smaller_than_0)+1)[:-1]/1000).tolist()
             depth_perturbation_list_modified = smaller_than_0+larger_equal_0
         if(depth_perturbation_list_modified == None):
             depth_perturbation_list_modified = depth_perturbation_list
