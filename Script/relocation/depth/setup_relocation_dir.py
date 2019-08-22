@@ -20,6 +20,7 @@ def generate_new_cmtsolution_files(cmts_dir, generated_cmts_dir, depth_perturbat
         gcmt_id = cmt_file.split("/")[-1]
         # consider the case when depth<20km
         event_depth = obspy.read_events(cmt_file)[0].origins[0].depth
+        depth_perturbation_list_modified = None
         if(event_depth < 20000):
             larger_than_0 = [i for i in depth_perturbation_list if i > 0]
             larger_equal_0 = [i for i in depth_perturbation_list if i >= 0]
