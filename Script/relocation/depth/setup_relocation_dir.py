@@ -23,18 +23,21 @@ def generate_new_cmtsolution_files(cmts_dir, generated_cmts_dir, depth_perturbat
         if(event_depth < 20000):
             larger_than_0 = [i for i in depth_perturbation_list if i > 0]
             larger_equal_0 = [i for i in depth_perturbation_list if i >= 0]
+            smaller_than_0 = [i for i in depth_perturbation_list if i < 0]
             smaller_than_0 = (np.linspace(
-                5000-event_depth, 0, len(larger_than_0))/1000).tolist()
-            depth_perturbation_list = smaller_than_0+larger_equal_0
+                5000-event_depth, 0, len(smaller_than_0))/1000).tolist()
+            depth_perturbation_list_modified = smaller_than_0+larger_equal_0
 
         # assume dirs like f"{generated_cmts_dir}/d-3" have already been created
-        for depth_per in depth_perturbation_list:
+        for index, depth_per in enumerate(depth_perturbation_list):
             generated_name = join(generated_cmts_dir,
                                   f"d{depth_per:.0f}", gcmt_id)
             # there are always problem in copy event, so here I'd like to read in the event again
             event_this_depth = obspy.read_events(cmt_file)[0]
             # event_this_depth = event.copy()
-            event_this_depth.origins[0].depth += 1000.0*depth_per
+            # here we use modified value
+            event_this_depth.origins[0].depth += 1000.0 * \
+                depth_perturbation_list_modified[index]
             # print(generated_name, generated_cmts_dir, f"d{depth_per}", gcmt_id)
             event_this_depth.write(generated_name, format="CMTSOLUTION")
 
@@ -63,7 +66,7 @@ def setup_basic_structure(main_dir, ref_dir, cmts_dir, depth_perturbation_list):
     sh.mkdir("-p", join(main_dir, "cmts", "cmts_generated"))
     for depth_per in depth_perturbation_list:
         sh.mkdir("-p", join(main_dir, "cmts",
-                            "cmts_generated", f"d{depth_per}"))
+                            "cmts_generated", f"d{depth_per:.0f}"))
 
     # working directory
     sh.mkdir("-p", join(main_dir, "work"))
@@ -81,7 +84,7 @@ def setup_structure_after_generat_cmts(main_dir, output_dir, depth_perturbation_
             # sh.mkdir(join(main_dir, "work", cmt_name, f"d{depth_per}"))
             # cp ref to working dirs
             sh.cp("-r", join(main_dir, "ref"),
-                  join(main_dir, "work", cmt_name, f"d{depth_per}"))
+                  join(main_dir, "work", cmt_name, f"d{depth_per:.0f}"))
 
     # mv DATA and utils back to ref
     sh.mv(join(main_dir, "DATA"), join(main_dir, "ref", "DATA"))
@@ -90,7 +93,8 @@ def setup_structure_after_generat_cmts(main_dir, output_dir, depth_perturbation_
     # mkdir DATA in work directory
     for cmt_name in cmt_names:
         for depth_per in depth_perturbation_list:
-            sh.mkdir(join(main_dir, "work", cmt_name, f"d{depth_per}", "DATA"))
+            sh.mkdir(join(main_dir, "work", cmt_name,
+                          f"d{depth_per:.0f}", "DATA"))
 
     # cp and ln files in DATA
     toln = ["cemRequest", "crust1.0", "crust2.0",
@@ -98,20 +102,20 @@ def setup_structure_after_generat_cmts(main_dir, output_dir, depth_perturbation_
     for cmt_name in cmt_names:
         for depth_per in depth_perturbation_list:
             sh.cp(join(main_dir, "cmts", "cmts_generated",
-                       f"d{depth_per}", cmt_name), join(main_dir, "work", cmt_name, f"d{depth_per}", "DATA", "CMTSOLUTION"))
+                       f"d{depth_per:.0f}", cmt_name), join(main_dir, "work", cmt_name, f"d{depth_per:.0f}", "DATA", "CMTSOLUTION"))
             sh.cp(join(main_dir, "ref", "DATA", "Par_file"), join(
-                main_dir, "work", cmt_name, f"d{depth_per}", "DATA", "Par_file"))
+                main_dir, "work", cmt_name, f"d{depth_per:.0f}", "DATA", "Par_file"))
             sh.cp(join(main_dir, "ref", "DATA", "STATIONS"), join(
-                main_dir, "work", cmt_name, f"d{depth_per}", "DATA", "STATIONS"))
+                main_dir, "work", cmt_name, f"d{depth_per:.0f}", "DATA", "STATIONS"))
             for lnfile in toln:
                 sh.ln("-s", join(main_dir, "ref", "DATA", lnfile), join(
-                    main_dir, "work", cmt_name, f"d{depth_per}", "DATA", lnfile))
+                    main_dir, "work", cmt_name, f"d{depth_per:.0f}", "DATA", lnfile))
 
             # ln in work files
             toln_work = ["utils"]
             for lnfile in toln_work:
                 sh.ln("-s", join(main_dir, "ref", lnfile), join(
-                    main_dir, "work", cmt_name, f"d{depth_per}", lnfile))
+                    main_dir, "work", cmt_name, f"d{depth_per:.0f}", lnfile))
 
     # mkdir and ln DATABASE_MPI and OUTPUT_FILES
     sh.mkdir("-p", output_dir)
@@ -120,13 +124,13 @@ def setup_structure_after_generat_cmts(main_dir, output_dir, depth_perturbation_
     for cmt_name in cmt_names:
         for depth_per in depth_perturbation_list:
             sh.mkdir("-p", join(output_dir, "DATABASES_MPI",
-                                cmt_name, f"d{depth_per}"))
+                                cmt_name, f"d{depth_per:.0f}"))
             sh.mkdir("-p", join(output_dir, "OUTPUT_FILES",
-                                cmt_name, f"d{depth_per}"))
+                                cmt_name, f"d{depth_per:.0f}"))
             sh.ln("-s", join(output_dir, "DATABASES_MPI",
-                             cmt_name, f"d{depth_per}"), join(main_dir, "work", cmt_name, f"d{depth_per}", "DATABASES_MPI"))
+                             cmt_name, f"d{depth_per:.0f}"), join(main_dir, "work", cmt_name, f"d{depth_per:.0f}", "DATABASES_MPI"))
             sh.ln("-s", join(output_dir, "OUTPUT_FILES",
-                             cmt_name, f"d{depth_per}"), join(main_dir, "work", cmt_name, f"d{depth_per}", "OUTPUT_FILES"))
+                             cmt_name, f"d{depth_per:.0f}"), join(main_dir, "work", cmt_name, f"d{depth_per:.0f}", "OUTPUT_FILES"))
 
 
 @click.command()
