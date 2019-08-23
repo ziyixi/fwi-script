@@ -1,13 +1,13 @@
 import argparse
 import sys
 from glob import glob
-from os.path import join
+from os.path import join, basename
 
 from slurmpy import Slurm
 
-N_total = 780
-N_each = 10
-N_iter = 78
+N_total = 156
+N_each = 13
+N_iter = 12
 nproc = 441
 
 
@@ -24,7 +24,7 @@ def get_args(args=None):
 
 
 def get_dirs(base):
-    return glob(join(base, "work", "*", "*"))
+    return glob(join(base, "*", "*"))
 
 
 def get_scripts(thedirs):
@@ -72,9 +72,9 @@ def get_scripts(thedirs):
     return result
 
 
-def submit_job(thecommand):
-    s = Slurm("relocation", {"nodes": 92, "ntasks": 4416,
-                             "partition": 'skx-normal', "time": "05:00:00", "account": "TG-EAR140030"})
+def submit_job(thecommand, base):
+    s = Slurm(basename(base), {"nodes": 120, "ntasks": 5760,
+                               "partition": 'skx-normal', "time": "18:00:00", "account": "TG-EAR140030"})
     s.run(thecommand)
 
 
@@ -82,4 +82,4 @@ if __name__ == "__main__":
     base = get_args(sys.argv[1:])
     thedirs = get_dirs(base)
     thecommand = get_scripts(thedirs)
-    submit_job(thecommand)
+    submit_job(thecommand, base)
