@@ -65,7 +65,7 @@ def get_scripts(run_pairs):
             jsonfileb = thepair.jsonb
             jsonfiles = thepair.jsons
 
-            result += f"ibrun -n {nproc} -o {inc} {PY} ./get_misfit2json.py --obs_path {obs_path} --syn_path {syn_path} --max_period {max_period} --min_period {min_period} --status body --log_file {log_file} --jsonfile {jsonfileb} &"
+            result += f"ibrun -n {nproc} -o {inc} {PY} ./get_misfit2json.py --obs_path {obs_path} --syn_path {syn_path} --max_period {max_period} --min_period {min_period} --status body --logfile {log_file} --jsonfile {jsonfileb} &"
         result += f"wait; "
         for ieach in range(N_each):
             # run N_node files at the same iter
