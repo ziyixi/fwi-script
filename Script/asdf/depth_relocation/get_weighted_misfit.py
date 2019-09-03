@@ -4,10 +4,12 @@ Get weighted misfit
 from recordtype import recordtype
 import numpy as np
 import json
+import collections
+
 
 misfit_windows = recordtype("misfit_windows", [
                             "channel", "phase", "misfit", "length", "amplitude", "gcarc", "azimuth", "azimuth_weight"])
-
+Misfit = collections.namedtuple('Misfit', ["p_z","p_r","s_z","s_r","s_t","surf_z","surf_r","surf_z_mt","surf_r_mt","p_all","sv_all","sh_all","ray_all","theall"])
 
 def extract_information(json_dict):
     p_z = []
@@ -252,17 +254,5 @@ def easy_main(bin_angle):
         ray_all.append(0.5*(surf_z_misfit+surf_r_misfit))
         theall.append(0.25*(0.5*(p_z_misfit+p_r_misfit) +
                             0.5*(s_z_misfit+s_r_misfit)+s_t_misfit+0.5*(surf_z_misfit+surf_r_misfit)))
-    # print("p_z_misfit", p_z)
-    # print("p_r_misfit", p_r)
-    # print("s_z_misfit", s_z)
-    # print("s_r_misfit", s_r)
-    # print("s_t_misfit", s_t)
-    # print("surf_z_misfit", surf_z)
-    # print("surf_r_misfit", surf_r)
-    # print("surf_z_mt_misfit", surf_z)
-    # print("surf_r_mt_misfit", surf_r)
-    # print("p_all", p_all)
-    # print("sv_all", sv_all)
-    # print("sh_all", sh_all)
-    # print("ray_all", ray_all)
-    # print("theall", theall)
+    # ! Misfit = collections.namedtuple('Misfit', ["p_z","p_r","s_z","s_r","s_t","surf_z","surf_r","surf_z_mt","surf_r_mt","p_all","sv_all","sh_all","ray_all","theall"])
+    return Misfit(p_z,p_r,s_z,s_r,s_t,surf_z,surf_r,surf_z_mt,surf_r_mt,p_all,sv_all,sh_all,ray_all,theall)
