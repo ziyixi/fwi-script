@@ -196,7 +196,7 @@ def combine_json_dict(body_dict, surf_dict):
     return body_dict
 
 
-def main(body_json, surf_json, bin_angle):
+def get_misfit_each_pair(body_json, surf_json, bin_angle):
     # combine json files
     body_f = open(body_json, "r")
     surf_f = open(surf_json, "r")
@@ -216,43 +216,16 @@ def main(body_json, surf_json, bin_angle):
     p_z_misfit, p_r_misfit, s_z_misfit, s_r_misfit, s_t_misfit, surf_z_misfit, surf_r_misfit, surf_z_mt_misfit, surf_r_mt_misfit = get_weighted_misfit(
         p_z, p_r, s_z, s_r, s_t, surf_z, surf_r, surf_z_mt, surf_r_mt)
 
+    # calculate misfit for some phases
+    p_all_misfit = 0.5*(p_z_misfit+p_r_misfit)
+    sv_all_misfit = 0.5*(s_z_misfit+s_r_misfit)
+    sh_all_misfit = s_t_misfit
+    ray_all_misfit = 0.5*(surf_z_misfit+surf_r_misfit)
+    theall_misfit = 0.25*(0.5*(p_z_misfit+p_r_misfit) +
+                          0.5*(s_z_misfit+s_r_misfit)+s_t_misfit+0.5*(surf_z_misfit+surf_r_misfit))
+
     # get the weighted misfit
-    return p_z_misfit, p_r_misfit, s_z_misfit, s_r_misfit, s_t_misfit, surf_z_misfit, surf_r_misfit, surf_z_mt_misfit, surf_r_mt_misfit
+    return Misfit(p_z_misfit, p_r_misfit, s_z_misfit, s_r_misfit, s_t_misfit, surf_z_misfit, surf_r_misfit, surf_z_mt_misfit, surf_r_mt_misfit, p_all_misfit, sv_all_misfit, sh_all_misfit, ray_all_misfit, theall_misfit)
 
 
-def easy_main(bin_angle):
-    """
-    for plotting purpose
-    """
-    thelist = ["-16.0", "-12.0", "-8.0", "-4.0",
-               "0.0", "4.0", "8.0", "12.0", "16.0"]
-    p_z, p_r, s_z, s_r, s_t, surf_z, surf_r, surf_z_mt, surf_r_mt = [
-        [] for i in range(9)]
-    p_all = []
-    sv_all = []
-    sh_all = []
-    ray_all = []
-    theall = []
-    for depth in thelist:
-        surf_json = f"surf_d{depth}.json"
-        body_json = f"body_d{depth}.json"
-        p_z_misfit, p_r_misfit, s_z_misfit, s_r_misfit, s_t_misfit, surf_z_misfit, surf_r_misfit, surf_z_mt_misfit, surf_r_mt_misfit = main(
-            body_json, surf_json, bin_angle)
-        p_z.append(p_z_misfit)
-        p_r.append(p_r_misfit)
-        s_z.append(s_z_misfit)
-        s_r.append(s_r_misfit)
-        s_t.append(s_t_misfit)
-        surf_z.append(surf_z_misfit)
-        surf_r.append(surf_r_misfit)
-        surf_z_mt.append(surf_z_mt_misfit)
-        surf_r_mt.append(surf_r_mt_misfit)
-
-        p_all.append(0.5*(p_z_misfit+p_r_misfit))
-        sv_all.append(0.5*(s_z_misfit+s_r_misfit))
-        sh_all.append(s_t_misfit)
-        ray_all.append(0.5*(surf_z_misfit+surf_r_misfit))
-        theall.append(0.25*(0.5*(p_z_misfit+p_r_misfit) +
-                            0.5*(s_z_misfit+s_r_misfit)+s_t_misfit+0.5*(surf_z_misfit+surf_r_misfit)))
-    # ! Misfit = collections.namedtuple('Misfit', ["p_z","p_r","s_z","s_r","s_t","surf_z","surf_r","surf_z_mt","surf_r_mt","p_all","sv_all","sh_all","ray_all","theall"])
-    return Misfit(p_z,p_r,s_z,s_r,s_t,surf_z,surf_r,surf_z_mt,surf_r_mt,p_all,sv_all,sh_all,ray_all,theall)
+    
