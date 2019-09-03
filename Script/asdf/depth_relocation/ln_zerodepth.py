@@ -43,4 +43,5 @@ def ln_files(gcmtid_list):
 
 
 if __name__ == "__main__":
-    ln_files()
+    gcmtid_list = get_keys()
+    ln_files(gcmtid_list)
