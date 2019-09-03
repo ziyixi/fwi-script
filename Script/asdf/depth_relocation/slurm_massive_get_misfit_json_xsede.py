@@ -92,7 +92,7 @@ def get_scripts(run_pairs):
 
 def submit_job(thecommand):
     s = Slurm("process", {"nodes": 10, "ntasks": 480,
-                          "partition": 'skx-normal', "time": "12:00:00", "account": "TG-EAR130011"})
+                          "partition": 'skx-normal', "time": "03:00:00", "account": "TG-EAR130011"})
     s.run(thecommand)
 
 
