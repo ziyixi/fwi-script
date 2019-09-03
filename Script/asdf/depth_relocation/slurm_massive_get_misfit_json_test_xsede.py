@@ -82,7 +82,7 @@ def get_scripts(run_pairs):
             jsonfileb = thepair.jsonb
             jsonfiles = thepair.jsons
 
-            result += f"ibrun -n {nproc} -o {inc} {PY} ./get_misfit2json.py --obs_path {obs_path} --syn_path {syn_path} --max_period {max_period} --min_period {min_period} --status surf --log_file {log_file} --jsonfile {jsonfiles} &"
+            result += f"ibrun -n {nproc} -o {inc} {PY} ./get_misfit2json.py --obs_path {obs_path} --syn_path {syn_path} --max_period {max_period} --min_period {min_period} --status surf --logfile {log_file} --jsonfile {jsonfiles} &"
         result += f"wait; "
 
         result += f"echo 'end iteration {iiter}'; "
