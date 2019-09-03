@@ -7,9 +7,9 @@ from slurmpy import Slurm
 import collections
 
 # some settings
-N_total = 2340
+N_total = 2730  # 2340
 N_each = 20
-N_iter = 117
+N_iter = 137  # 117
 nproc = 24
 
 PY = "/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
