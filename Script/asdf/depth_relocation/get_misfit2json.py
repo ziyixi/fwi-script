@@ -286,8 +286,8 @@ def get_amp_timelen_values(windows, st, st_syn):
 def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
     freqmin = 1.0/max_period
     freqmax = 1.0/min_period
-    obs_ds = pyasdf.ASDFDataSet(obs_path)
-    syn_ds = pyasdf.ASDFDataSet(syn_path)
+    obs_ds = pyasdf.ASDFDataSet(obs_path, mode="r")
+    syn_ds = pyasdf.ASDFDataSet(syn_path, mode="r")
     event = obs_ds.events[0]
     origin = event.preferred_origin() or event.origins[0]
     evla = origin.latitude
