@@ -1,4 +1,4 @@
-import glob
+from glob import glob
 import json
 from os.path import join, basename
 import tqdm
