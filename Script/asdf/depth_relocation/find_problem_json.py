@@ -1,6 +1,7 @@
 import glob
 import json
 from os.path import join, basename
+import tqdm
 
 basedir = "/scratch/05880/tg851791/relocation/work/misfit_json"
 allfiles = glob(join(basedir, "*json"))
