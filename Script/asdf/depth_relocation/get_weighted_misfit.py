@@ -233,7 +233,7 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle):
     return Misfit(p_z_misfit, p_r_misfit, s_z_misfit, s_r_misfit, s_t_misfit, surf_z_misfit, surf_r_misfit, surf_z_mt_misfit, surf_r_mt_misfit, p_all_misfit, sv_all_misfit, sh_all_misfit, ray_all_misfit, theall_misfit)
 
 
- def get_pairs():
+def get_pairs():
     json_paths=glob(join(base_dir,"*json"))
     keys=set()
     for json_item in json_paths:
