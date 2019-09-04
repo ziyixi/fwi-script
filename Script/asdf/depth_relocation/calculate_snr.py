@@ -38,8 +38,8 @@ def calculate_snr(tr, first_arrival):
 
     noise_data = noise.data
     signal_data = signal.data
-    noise_npts = noise.npts
-    signal_npts = signal.npts
+    noise_npts = noise.stats.npts
+    signal_npts = signal.stats.npts
 
     pn = np.sum(noise_data**2)/noise_npts
     ps = np.sum(signal_data**2)/signal_npts
