@@ -244,6 +244,7 @@ def get_amp_timelen_values(windows, st, st_syn):
             result_time["r"][key] = endtime-starttime
             data_syn = trace_syn.slice(starttime, endtime).data
             ratio = np.max(np.abs(data))/np.max(np.abs(data_syn))
+            # ! remove traces wen the ratio is larger than 3
             if(ratio > 3 or ratio < 1/3):
                 result["r"][key] = None
     # t
