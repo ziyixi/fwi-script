@@ -206,6 +206,7 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle):
     body_f = open(body_json, "r")
     surf_f = open(surf_json, "r")
     body_dict = json.load(body_f)
+    print(surf_f)
     surf_dict = json.load(surf_f)
     json_dict = combine_json_dict(body_dict, surf_dict)
 
