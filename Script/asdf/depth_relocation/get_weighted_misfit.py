@@ -8,6 +8,7 @@ import collections
 from glob import glob
 from os.path import join,basename
 import pandas as pd
+import tqdm
 
 base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
 bin_angle=20
@@ -206,7 +207,6 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle):
     body_f = open(body_json, "r")
     surf_f = open(surf_json, "r")
     body_dict = json.load(body_f)
-    print(surf_f)
     surf_dict = json.load(surf_f)
     json_dict = combine_json_dict(body_dict, surf_dict)
 
@@ -255,7 +255,7 @@ def get_pairs():
 def sum2pd(result_pairs):
     df = pd.DataFrame(columns=["gcmtid","depth","process_flag","p_z","p_r","s_z","s_r","s_t","surf_z","surf_r","surf_z_mt","surf_r_mt","p_all","sv_all","sh_all","ray_all","theall"])
     num_pairs=len(result_pairs)
-    for i in range(num_pairs):
+    for i in tqdm.tqdm(range(num_pairs),total=len(num_pairs)):
         thepair=result_pairs[i]
         themisfit=get_misfit_each_pair(thepair[0],thepair[1],bin_angle)
         df.loc[i]=[thepair[2],thepair[3],thepair[4],themisfit.p_z,themisfit.p_r,themisfit.s_z,themisfit.s_r,themisfit.s_t,
