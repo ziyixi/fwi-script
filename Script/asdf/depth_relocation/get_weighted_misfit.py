@@ -5,7 +5,12 @@ from recordtype import recordtype
 import numpy as np
 import json
 import collections
+from glob import glob
+from os.path import join,basename
+import pandas as pd
 
+base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
+bin_angle=20
 
 misfit_windows = recordtype("misfit_windows", [
                             "channel", "phase", "misfit", "length", "amplitude", "gcarc", "azimuth", "azimuth_weight"])
@@ -228,4 +233,36 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle):
     return Misfit(p_z_misfit, p_r_misfit, s_z_misfit, s_r_misfit, s_t_misfit, surf_z_misfit, surf_r_misfit, surf_z_mt_misfit, surf_r_mt_misfit, p_all_misfit, sv_all_misfit, sh_all_misfit, ray_all_misfit, theall_misfit)
 
 
-    
+ def get_pairs():
+    json_paths=glob(join(base_dir,"*json"))
+    keys=set()
+    for json_item in json_paths:
+        json_fname=basename(json_item)
+        gcmtid,depth,process_flag,pos_flag,_=json_fname.split(".")
+        thekey=".".join([gcmtid,depth,process_flag])
+        keys.add(thekey)
+    keys=sorted(keys)
+    gcmt_keys=sorted(gcmt_keys)
+    result_pairs=[]
+    for thekey in keys:
+        thebody=thekey+".body.json"
+        thesurf=thekey+".surf.json"
+        gcmtid,depth,process_flag=thekey.split(".")
+        result_pairs.append((join(base_dir,thebody),join(base_dir,thesurf),gcmtid,depth,process_flag))
+    return result_pairs
+
+
+def sum2pd(result_pairs):
+    df = pd.DataFrame(columns=["gcmtid","depth","process_flag","p_z","p_r","s_z","s_r","s_t","surf_z","surf_r","surf_z_mt","surf_r_mt","p_all","sv_all","sh_all","ray_all","theall"])
+    num_pairs=len(result_pairs)
+    for i in range(num_pairs):
+        thepair=result_pairs[i]
+        themisfit=get_misfit_each_pair(thepair[0],thepair[1],bin_angle)
+        df.loc[i]=[thepair[2],thepair[3],thepair[4],themisfit.p_z,themisfit.p_r,themisfit.s_z,themisfit.s_r,themisfit.s_t,
+        themisfit.surf_z,themisfit.surf_r,themisfit.surf_z_mt,themisfit.surf_r_mt,themisfit.p_all,themisfit.sv_all,
+        themisfit.sh_all,themisfit.ray_all,themisfit.theall]
+    df.to_csv("misfit.csv")
+
+if __name__ == "__main__":
+    result_pairs=get_pairs()
+    sum2pd(result_pairs)
