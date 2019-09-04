@@ -242,7 +242,6 @@ def get_pairs():
         thekey=".".join([gcmtid,depth,process_flag])
         keys.add(thekey)
     keys=sorted(keys)
-    gcmt_keys=sorted(gcmt_keys)
     result_pairs=[]
     for thekey in keys:
         thebody=thekey+".body.json"
