@@ -40,6 +40,6 @@ date
 # Launch serial code...
 
 PY="/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
-ibrun $PY -W ignore ./calculate_snr_mpi.py         # Do not use ibrun or any other MPI launcher
+ibrun $PY ./calculate_snr_mpi.py         # Do not use ibrun or any other MPI launcher
 
 # ---------------------------------------------------
