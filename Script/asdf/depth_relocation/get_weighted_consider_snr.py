@@ -220,7 +220,7 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle, misfit_path):
 
     # get snr information
     misfit_mat = None
-    misfit_mapper = None
+    misfit_mapper = {}
     if(isfile(misfit_path)):
         misfit_mat = np.loadtxt(misfit_path, dtype=np.str)
         misfit_mat[:, 1:] = misfit_mat[:, 1:].astype(np.float)
@@ -228,6 +228,7 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle, misfit_path):
             misfit_mapper[row[0]] = (row[1], row[2], row[3])
     else:
         print(misfit_path)
+        misfit_mapper = None
 
     # extract to windows
     p_z, p_r, s_z, s_r, s_t, surf_z, surf_r, surf_z_mt, surf_r_mt = extract_information(
