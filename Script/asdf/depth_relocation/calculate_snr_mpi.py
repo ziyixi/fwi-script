@@ -54,7 +54,7 @@ def calculate_snr(tr, first_arrival):
 
 
 def handle_one_asdf(asdf_path, output_path):
-    ds = pyasdf.ASDFDataSet(asdf_path, mode="r")
+    ds = pyasdf.ASDFDataSet(asdf_path, mode="r", mpi=False)
     all_stations = ds.waveforms.list()
     event = ds.events[0]
     origin = event.preferred_origin() or event.origins[0]
