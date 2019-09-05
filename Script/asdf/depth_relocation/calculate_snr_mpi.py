@@ -14,7 +14,7 @@ isroot = (rank == 0)
 
 model = TauPyModel(model='ak135')
 basedir = "/scratch/05880/tg851791/process_data/all_484_processed_simplified"
-outputdir = "/scratch/05880/tg851791/process_data/snr"
+outputdir = "/scratch/05880/tg851791/process_data/snr_more"
 
 
 def get_asdf_files_to_handle(all_files, all_output):

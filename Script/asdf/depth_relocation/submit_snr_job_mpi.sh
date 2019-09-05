@@ -28,7 +28,7 @@
 #SBATCH -p normal      # Queue (partition) name
 #SBATCH -N 5               # Total # of nodes (must be 1 for serial)
 #SBATCH -n 340               # Total # of mpi tasks (should be 1 for serial)
-#SBATCH -t 01:00:00        # Run time (hh:mm:ss)
+#SBATCH -t 02:00:00        # Run time (hh:mm:ss)
 #SBATCH -A TG-EAR130011       # Allocation name (req'd if you have more than 1)
 
 # Other commands must follow all #SBATCH directives...
