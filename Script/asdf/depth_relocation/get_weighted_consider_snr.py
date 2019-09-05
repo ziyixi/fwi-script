@@ -223,9 +223,9 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle, misfit_path):
     misfit_mapper = {}
     if(isfile(misfit_path)):
         misfit_mat = np.loadtxt(misfit_path, dtype=np.str)
-        misfit_mat[:, 1:] = misfit_mat[:, 1:].astype(np.float)
         for row in misfit_mat:
-            misfit_mapper[row[0]] = (row[1], row[2], row[3])
+            misfit_mapper[row[0]] = (
+                float(row[1]), float(row[2]), float(row[3]))
     else:
         print(misfit_path)
         misfit_mapper = None
