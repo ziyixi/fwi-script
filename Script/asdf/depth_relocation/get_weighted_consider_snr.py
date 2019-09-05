@@ -276,7 +276,7 @@ def get_pairs():
 
 
 def sum2pd(result_pairs):
-    df = pd.DataFrame(columns=["gcmtid", "depth", "process_flag", "snr", "p_z", "p_r", "s_z", "s_r", "s_t",
+    df = pd.DataFrame(columns=["gcmtid", "depth", "process_flag", "p_z", "p_r", "s_z", "s_r", "s_t",
                                "surf_z", "surf_r", "surf_z_mt", "surf_r_mt", "p_all", "sv_all", "sh_all", "ray_all", "theall"])
     num_pairs = len(result_pairs)
     for i in tqdm.tqdm(range(num_pairs), total=num_pairs):
