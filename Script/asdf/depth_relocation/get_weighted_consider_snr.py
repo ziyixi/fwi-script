@@ -36,7 +36,7 @@ def extract_information(json_dict, misfit_mapper):
         if(misfit_mapper != None):
             snrr, snrt, snrz = misfit_mapper[net_sta]
         else:
-            snrr, snrt, snrz = 100
+            snrr, snrt, snrz = 100, 100, 100
 
         if((info["misfit_r"]["pn"] != None) and (info["amplitude"]["r"]["pn"] != None) and (snrr >= min_snr)):
             p_r.append(misfit_windows(
