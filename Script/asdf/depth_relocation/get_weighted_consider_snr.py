@@ -227,7 +227,7 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle, misfit_path):
             misfit_mapper[row[0]] = (
                 float(row[1]), float(row[2]), float(row[3]))
     else:
-        print(misfit_path)
+        print(body_json)
         misfit_mapper = None
 
     # extract to windows
