@@ -60,7 +60,7 @@ def extract_information():
             event_snr_count[gcmtid] += 1
             station_snr[stname] += np.array([float(row[1]),
                                              float(row[2]), float(row[3])])
-            station_snr_count += 1
+            station_snr_count[stname] += 1
 
     return event_snr, event_snr_count, station_snr, station_snr_count
 
