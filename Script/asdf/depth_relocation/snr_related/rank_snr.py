@@ -26,7 +26,10 @@ def get_stationnames(data):
     stationnames = set()
     for gcmtid in data:
         loaded_data = data[gcmtid]
-        net_sta = loaded_data[:, 0]
+        if(np.shape(loaded_data)[0] == 0):
+            net_sta = []
+        else:
+            net_sta = loaded_data[:, 0]
         stationnames = stationnames | set(net_sta)
     return sorted(stationnames)
 
