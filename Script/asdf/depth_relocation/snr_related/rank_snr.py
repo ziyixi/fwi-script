@@ -5,6 +5,7 @@ import numpy as np
 from glob import glob
 from os.path import join, basename
 import pandas as pd
+import tqdm
 
 basedir = "/scratch/05880/tg851791/process_data/snr_more"
 process_flag = "preprocessed_10s_to_120s"
@@ -47,7 +48,7 @@ def extract_information():
         station_snr_count[stname] = 0
 
     # loop for all items:
-    for gcmtid in data:
+    for gcmtid in tqdm.tqdm(data):
         data_array = data[gcmtid]
         for row in data_array:
             stname = row[0]
