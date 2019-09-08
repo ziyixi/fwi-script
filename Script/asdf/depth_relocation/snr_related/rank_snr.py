@@ -75,17 +75,17 @@ def write_to_pd(event_snr, event_snr_count, station_snr, station_snr_count):
         count_info = event_snr_count[gcmtid]
         snr_info = event_snr[gcmtid]
         if(count_info == 0):
-            df_event.loc[i] = [np.nan, np.nan, np.nan,
-                               snr_info[0], snr_info[1], snr_info[2], count_info]
+            df_event.loc[index] = [np.nan, np.nan, np.nan,
+                                   snr_info[0], snr_info[1], snr_info[2], count_info]
         else:
-            df_event.loc[i] = [gcmtid, snr_info[0] /
-                               count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
+            df_event.loc[index] = [gcmtid, snr_info[0] /
+                                   count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
     # station
     for index, netsta in enumerate(sorted(station_snr.keys())):
         count_info = station_snr_count[netsta]
         snr_info = station_snr[netsta]
-        df_station.loc[i] = [netsta, snr_info[0] /
-                             count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
+        df_station.loc[index] = [netsta, snr_info[0] /
+                                 count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
 
     df_event.to_csv(f"{process_flag}.event.csv", index=False)
     df_station.to_csv(f"{process_flag}.station.csv", index=False)
