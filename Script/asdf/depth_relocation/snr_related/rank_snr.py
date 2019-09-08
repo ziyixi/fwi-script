@@ -64,21 +64,25 @@ def extract_information():
 
 def write_to_pd(event_snr, event_snr_count, station_snr, station_snr_count):
     df_event = pd.DataFrame(columns=["gcmtid", "snr_r", "snr_t", "snr_z",
-                                     "allsnr_r", "allsnr_t", "allsnr_z", "count_r", "count_t", "count_z"])
+                                     "allsnr_r", "allsnr_t", "allsnr_z", "count"])
     df_station = pd.DataFrame(columns=["netsta", "snr_r", "snr_t", "snr_z",
-                                       "allsnr_r", "allsnr_t", "allsnr_z", "count_r", "count_t", "count_z"])
+                                       "allsnr_r", "allsnr_t", "allsnr_z", "count"])
     # event
     for index, gcmtid in enumerate(sorted(event_snr.keys())):
         count_info = event_snr_count[gcmtid]
         snr_info = event_snr[gcmtid]
-        df_event.loc[i] = [gcmtid, snr_info[0] /
-                           count_info[0], snr_info[1]/count_info[1], snr_info[2]/count_info[2],  snr_info[0], snr_info[1], snr_info[2], count_info[0], count_info[1], count_info[2]]
+        if(count_info == 0):
+            df_event.loc[i] = [np.nan, np.nan, np.nan,
+                               snr_info[0], snr_info[1], snr_info[2], count_info]
+        else:
+            df_event.loc[i] = [gcmtid, snr_info[0] /
+                               count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
     # station
     for index, netsta in enumerate(sorted(station_snr.keys())):
         count_info = station_snr_count[netsta]
         snr_info = station_snr[netsta]
         df_station.loc[i] = [netsta, snr_info[0] /
-                             count_info[0], snr_info[1]/count_info[1], snr_info[2]/count_info[2],  snr_info[0], snr_info[1], snr_info[2], count_info[0], count_info[1], count_info[2]]
+                             count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
 
     df_event.to_csv(f"{process_flag}.event.csv", index=False)
     df_station.to_csv(f"{process_flag}.station.csv", index=False)
