@@ -42,6 +42,8 @@ def extract_amp_info(gcmtid_list):
                 pr = (amp_info["r"]["p"] or amp_info["r"]["pn"])
                 sr = (amp_info["r"]["s"])
                 st = (amp_info["t"]["s"])
+                if(net_sta == "HL.BAQ" and gcmtid == "201802112314A"):
+                    print(pz, sz, pr, sr, st, amp_info)
                 if(pz and sz):
                     print(gcmtid, "pz_sz")
                     result[gcmtid]["pz_sz"].append(pz/sz)
