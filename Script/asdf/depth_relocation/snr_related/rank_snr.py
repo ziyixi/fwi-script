@@ -51,12 +51,14 @@ def extract_information():
         station_snr_count[stname] = 0
 
     # loop for all items:
-    for gcmtid in tqdm.tqdm(data):
+    for gcmtid in data:
         data_array = data[gcmtid]
         for row in data_array:
             stname = row[0]
             event_snr[gcmtid] += np.array([float(row[1]),
                                            float(row[2]), float(row[3])])
+            if(gcmtid == "200709061751A"):
+                print(row[0], event_snr[gcmtid])
             event_snr_count[gcmtid] += 1
             station_snr[stname] += np.array([float(row[1]),
                                              float(row[2]), float(row[3])])
