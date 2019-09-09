@@ -54,11 +54,12 @@ def extract_information():
     for gcmtid in data:
         data_array = data[gcmtid]
         for row in data_array:
+            # remove inf
+            if(row[0] == "inf" or row[1] == "inf" or row[2] == "inf"):
+                continue
             stname = row[0]
             event_snr[gcmtid] += np.array([float(row[1]),
                                            float(row[2]), float(row[3])])
-            if(gcmtid == "200709061751A"):
-                print(row[0], event_snr[gcmtid], row)
             event_snr_count[gcmtid] += 1
             station_snr[stname] += np.array([float(row[1]),
                                              float(row[2]), float(row[3])])
@@ -86,8 +87,12 @@ def write_to_pd(event_snr, event_snr_count, station_snr, station_snr_count):
     for index, netsta in enumerate(sorted(station_snr.keys())):
         count_info = station_snr_count[netsta]
         snr_info = station_snr[netsta]
-        df_station.loc[index] = [netsta, snr_info[0] /
-                                 count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
+        if(count_info == 0):
+            df_station.loc[index] = [netsta, np.nan, np.nan, np.nan,
+                                     snr_info[0], snr_info[1], snr_info[2], count_info]
+        else:
+            df_station.loc[index] = [netsta, snr_info[0] /
+                                     count_info, snr_info[1]/count_info, snr_info[2]/count_info,  snr_info[0], snr_info[1], snr_info[2], count_info]
 
     df_event.to_csv(f"{process_flag}.event.csv", index=False)
     df_station.to_csv(f"{process_flag}.station.csv", index=False)
