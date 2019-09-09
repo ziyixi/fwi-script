@@ -36,7 +36,7 @@ def extract_amp_info(gcmtid_list):
         with open(file_path, "r") as f:
             data_dict = json.load(f)
             if(gcmtid == "201802112314A"):
-                print(data_dict["HL.BAQ"]["amplitude"])
+                print(data_dict["HL.BAQ"]["amplitude"], file_path)
             for net_sta in data_dict:
                 amp_info = data_dict[net_sta]["amplitude"]
                 pz = (amp_info["z"]["p"] or amp_info["z"]["pn"])
