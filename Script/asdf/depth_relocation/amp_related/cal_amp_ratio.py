@@ -43,16 +43,22 @@ def extract_amp_info(gcmtid_list):
                 sr = (amp_info["r"]["s"])
                 st = (amp_info["t"]["s"])
                 if(pz and sz):
+                    print(gcmtid, "pz_sz")
                     result[gcmtid]["pz_sz"].append(pz/sz)
                 if(pr and sr):
+                    print(gcmtid, "pr_sr")
                     result[gcmtid]["pr_sr"].append(pr/sr)
                 if(pz and pr):
+                    print(gcmtid, "pz_pr")
                     result[gcmtid]["pz_pr"].append(pz/pr)
                 if(sz and sr):
+                    print(gcmtid, "sz_sr")
                     result[gcmtid]["sz_sr"].append(sz/sr)
                 if(sz and st):
+                    print(gcmtid, "sz_st")
                     result[gcmtid]["sz_st"].append(sz/st)
                 if(sr and st):
+                    print(gcmtid, "sr_st")
                     result[gcmtid]["sr_st"].append(sr/st)
     json.dump(result, open("amp_ratio.json", 'w'))
 
