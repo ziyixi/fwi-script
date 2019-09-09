@@ -55,9 +55,9 @@ def extract_information():
         data_array = data[gcmtid]
         for row in data_array:
             # remove inf
-            if(row[0] == "inf" or row[1] == "inf" or row[2] == "inf"):
+            if(row[3] == "inf" or row[1] == "inf" or row[2] == "inf"):
                 continue
-            if(row[0] == "nan" or row[1] == "nan" or row[2] == "nan"):
+            if(row[3] == "nan" or row[1] == "nan" or row[2] == "nan"):
                 continue
             stname = row[0]
             event_snr[gcmtid] += np.array([float(row[1]),
@@ -66,8 +66,6 @@ def extract_information():
             station_snr[stname] += np.array([float(row[1]),
                                              float(row[2]), float(row[3])])
             station_snr_count[stname] += 1
-            if(gcmtid == "200711270427A"):
-                print(event_snr[gcmtid], row)
 
     return event_snr, event_snr_count, station_snr, station_snr_count
 
