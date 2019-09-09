@@ -43,7 +43,7 @@ def extract_amp_info(gcmtid_list):
                 sr = (amp_info["r"]["s"])
                 st = (amp_info["t"]["s"])
                 if(net_sta == "HL.BAQ" and gcmtid == "201802112314A"):
-                    print(pz, sz, pr, sr, st, amp_info)
+                    print(pz, sz, pr, sr, st, data_dict[net_sta]["amplitude"])
                 if(pz and sz):
                     print(gcmtid, "pz_sz")
                     result[gcmtid]["pz_sz"].append(pz/sz)
