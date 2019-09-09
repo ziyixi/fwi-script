@@ -58,7 +58,7 @@ def extract_information():
             event_snr[gcmtid] += np.array([float(row[1]),
                                            float(row[2]), float(row[3])])
             if(gcmtid == "200709061751A"):
-                print(row[0], event_snr[gcmtid])
+                print(row[0], event_snr[gcmtid], row)
             event_snr_count[gcmtid] += 1
             station_snr[stname] += np.array([float(row[1]),
                                              float(row[2]), float(row[3])])
