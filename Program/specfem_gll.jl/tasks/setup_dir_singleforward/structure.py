@@ -5,6 +5,7 @@ from os.path import join
 
 import numpy as np
 import sh
+import tqdm
 
 
 def get_args(args=None):
@@ -55,7 +56,7 @@ def init_structure(base, cmtfiles, ref, output):
     dirs = [i.split("/")[-1] for i in dirs_raw]
 
     # cp to work directories
-    for dir in dirs:
+    for dir in tqdm.tqdm(dirs):
         sh.cp("-r", join(base, "ref"), join(base, "work", dir))
 
     # mv DATA and utils back to ref
@@ -69,7 +70,7 @@ def init_structure(base, cmtfiles, ref, output):
     # cp and ln files in DATA
     toln = ["cemRequest", "crust1.0", "crust2.0",
             "crustmap", "epcrust", "eucrust-07", "GLL", "heterogen", "Lebedev_sea99", "Montagner_model", "old", "PPM", "QRFSI12", "s20rts", "s362ani", "s40rts", "Simons_model", "topo_bathy", "Zhao_JP_model"]
-    for dir in dirs:
+    for dir in tqdm.tqdm(dirs):
         sh.cp(join(cmtfiles, dir), join(
             base, "work", dir, "DATA", "CMTSOLUTION"))
         sh.cp(join(base, "ref", "DATA", "Par_file"),
@@ -90,7 +91,7 @@ def init_structure(base, cmtfiles, ref, output):
     sh.mkdir("-p", output)
     sh.mkdir("-p", join(output, "DATABASES_MPI"))
     sh.mkdir("-p", join(output, "OUTPUT_FILES"))
-    for dir in dirs:
+    for dir in tqdm.tqdm(dirs):
         sh.mkdir("-p", join(output, "DATABASES_MPI", dir))
         sh.mkdir("-p", join(output, "OUTPUT_FILES", dir))
         sh.ln("-s", join(output, "DATABASES_MPI", dir),
