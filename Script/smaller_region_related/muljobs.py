@@ -74,7 +74,7 @@ def get_scripts(thedirs):
 
 def submit_job(thecommand):
     s = Slurm("sync", {"nodes": 108, "ntasks": 5184,
-                       "partition": 'skx-normal', "time": "18:00:00"})
+                       "partition": 'skx-normal', "time": "18:00:00", "account": "TG-EAR130011"})
     s.run(thecommand)
 
 
