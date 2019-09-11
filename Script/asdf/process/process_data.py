@@ -102,7 +102,7 @@ def process_single_event(min_periods, max_periods, asdf_filename, waveform_lengt
             elif(status_code == -1):
                 logger.error(
                     f"[{rank}/{size}] {inv.get_contents()['stations'][0]} error in cutting data")
-                return725726868
+                return
             else:
                 raise Exception("unknown status code")
             st.trim(event_time, event_time+waveform_length)
