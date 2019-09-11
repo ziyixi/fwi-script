@@ -1,3 +1,6 @@
+"""
+seprate different events
+"""
 import argparse
 import sys
 from glob import glob
@@ -9,6 +12,7 @@ N_total = 192
 N_each = 16
 N_iter = 12
 nproc = 324
+nproc_performance = 336
 
 
 def get_args(args=None):
@@ -28,11 +32,11 @@ def get_dirs(base):
 
 
 def get_scripts(thedirs):
-    result = ""
+    result = "date; "
     # for xmeshfem3D
     result += f"echo 'start xmeshfem3D'; "
     for iiter in range(N_iter):
-        result += f"echo 'start iteration {iiter}'; "
+        result += f"echo 'start iteration {iiter}'; date; "
         for ieach in range(N_each):
             # ievent
             ievent = iiter*N_each+ieach
@@ -41,16 +45,16 @@ def get_scripts(thedirs):
             result += f"cd {ievent_dir}; "
             # if N_each-1
             if(ieach == N_each-1):
-                inc = ieach*nproc
+                inc = ieach*nproc_performance
                 result += f"ibrun -n {nproc} -o {inc} ./bin/xmeshfem3D; "
             else:
-                inc = ieach*nproc
+                inc = ieach*nproc_performance
                 result += f"ibrun -n {nproc} -o {inc} ./bin/xmeshfem3D & "
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
 
     # for xspecfem3D
-    result += f"echo 'start xspecfem3D'; "
+    result += f"echo 'start xspecfem3D'; date;"
     for iiter in range(N_iter):
         result += f"echo 'start iteration {iiter}'; "
         for ieach in range(N_each):
@@ -61,10 +65,10 @@ def get_scripts(thedirs):
             result += f"cd {ievent_dir}; "
             # if N_each-1
             if(ieach == N_each-1):
-                inc = ieach*nproc
+                inc = ieach*nproc_performance
                 result += f"ibrun -n {nproc} -o {inc} ./bin/xspecfem3D; "
             else:
-                inc = ieach*nproc
+                inc = ieach*nproc_performance
                 result += f"ibrun -n {nproc} -o {inc} ./bin/xspecfem3D & "
         result += f"wait; "
         result += f"echo 'end iteration {iiter}'; "
@@ -73,7 +77,7 @@ def get_scripts(thedirs):
 
 
 def submit_job(thecommand):
-    s = Slurm("sync", {"nodes": 108, "ntasks": 5184,
+    s = Slurm("sync", {"nodes": 112, "ntasks": 5376,
                        "partition": 'skx-normal', "time": "24:00:00", "account": "TG-EAR130011"})
     s.run(thecommand)
 
