@@ -1,5 +1,5 @@
 """
-gather result to numpy pkl file
+gather result to numpy npy file
 """
 import numpy as np
 import tqdm
