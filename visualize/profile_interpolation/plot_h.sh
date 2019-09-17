@@ -1,0 +1,1 @@
+python plot_profile_np.py --region 135/125/35/45/$1/$1 --rawregion 122/24/147/49/400/450 --data ./ppm_per_fwea18_fwea18_ref_taoregion_test_410/vsh.npy --parameter vsh --npts 41/41/101
