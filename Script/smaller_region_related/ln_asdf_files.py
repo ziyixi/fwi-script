@@ -11,11 +11,11 @@ target_dir = "/scratch/05880/tg851791/process_data/asdf_raw_all_smallregion"
 
 for gcmtid in sorted(gcmtid_set):
     # try to ln from dir1
-    command = f"ln -s ../{source_dir1}/raw_{gcmtid}.h5 {target_dir}"
-    if(isfile(f"../{source_dir1}/raw_{gcmtid}.h5")):
+    command = f"ln -s {source_dir1}/raw_{gcmtid}.h5 {target_dir}"
+    if(isfile(f"{source_dir1}/raw_{gcmtid}.h5")):
         subprocess.call(command, shell=True)
 
     # try to ln from dir2
-    command = f"ln -s ../{source_dir2}/raw_{gcmtid}.h5 {target_dir}"
-    if(isfile(f"../{source_dir2}/raw_{gcmtid}.h5")):
+    command = f"ln -s {source_dir2}/raw_{gcmtid}.h5 {target_dir}"
+    if(isfile(f"{source_dir2}/raw_{gcmtid}.h5")):
         subprocess.call(command, shell=True)
