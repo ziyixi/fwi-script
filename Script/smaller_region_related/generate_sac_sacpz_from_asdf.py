@@ -19,9 +19,15 @@ outdir = "/scratch/05880/tg851791/process_data/sac_raw_all_smallregion"
 def generate_single(gcmtid):
     # firstly we get paths
     sac_path = join(outdir, gcmtid)
-    os.mkdir(sac_path, exist_ok=True)
+    try:
+        os.mkdir(sac_path)
+    except:
+        pass
     sacpz_path = join(outdir, gcmtid, "SACPZ")
-    os.mkdir(sacpz_path, exist_ok=True)
+    try:
+        os.mkdir(sacpz_path)
+    except:
+        pass
     asdf_path = join(basedir, f"raw_{gcmtid}.h5")
     ds = pyasdf.ASDFDataSet(asdf_path, mode="r")
 
