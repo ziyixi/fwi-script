@@ -67,7 +67,11 @@ def generate_single(gcmtid):
         # write sacpz files
         fname = net_sta
         fpath = join(sacpz_path, fname)
-        inv.write(fpath, format="SACPZ")
+        # there are possibility that inv has problem, log it
+        try:
+            inv.write(fpath, format="SACPZ")
+        except:
+            print(fpath)
 
 
 def main():
