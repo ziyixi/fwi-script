@@ -7,6 +7,7 @@ for fpath in sorted(glob(join(basedir, "*"))):
     sacpzpath = join(fpath, "SACPZ", "*")
     value = False
     for item in sacpzpath:
+        print(item)
         if("BHZ" in item):
             value = True
     if(value):
