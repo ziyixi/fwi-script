@@ -7,6 +7,7 @@ import tqdm
 from os.path import join, basename
 from glob import glob
 import os
+import obspy
 from obspy.geodetics.base import gps2dist_azimuth
 from obspy.geodetics import kilometers2degrees
 import numpy as np
@@ -42,6 +43,7 @@ def generate_single(gcmtid):
             fname = tr.id
             fpath = join(sac_path, fname)
             # add some info to sac files
+            tr.stats.sac = obspy.core.util.attribdict.AttribDict()
             tr.stats.sac.stla = inv[0][0].latitude
             tr.stats.sac.stlo = inv[0][0].longitude
             tr.stats.sac.stdp = inv[0][0].depth/1000
