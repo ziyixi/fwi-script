@@ -4,7 +4,7 @@ Generate raw sac data files as Dr. Chen required.
 import pyasdf
 import multiprocessing
 import tqdm
-from os.path import join, basename
+from os.path import join, basename, isfile
 from glob import glob
 import os
 import obspy
@@ -35,13 +35,19 @@ def generate_single(gcmtid):
 
     # loop all
     for net_sta in net_sta_list:
-        st = ds.waveforms[net_sta].raw
-        inv = ds.waveforms[net_sta].StationXML
+        try:
+            st = ds.waveforms[net_sta].raw
+            inv = ds.waveforms[net_sta].StationXML
+        except:
+            print(asdf_path, net_sta)
+            continue
         # write sac files
         for tr_raw in st:
             tr = tr_raw.copy()
             fname = tr.id
             fpath = join(sac_path, fname)
+            if(isfile(fpath)):
+                continue
             # add some info to sac files
             tr.stats.sac = obspy.core.util.attribdict.AttribDict()
             tr.stats.sac.stla = inv[0][0].latitude
@@ -67,6 +73,8 @@ def generate_single(gcmtid):
         # write sacpz files
         fname = net_sta
         fpath = join(sacpz_path, fname)
+        if(isfile(fpath)):
+            continue
         # there are possibility that inv has problem, log it
         try:
             inv.write(fpath, format="SACPZ")
