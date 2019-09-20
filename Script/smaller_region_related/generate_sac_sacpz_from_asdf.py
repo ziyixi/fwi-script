@@ -70,8 +70,8 @@ def generate_single(gcmtid):
         # there are possibility that inv has problem, log it
         try:
             inv.write(fpath, format="SACPZ")
-            print(fpath)
         except:
+            # failed inv means we process them using sacpz file before
             pass
 
 
