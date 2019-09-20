@@ -46,7 +46,7 @@ def generate_single(gcmtid):
             tr.stats.sac = obspy.core.util.attribdict.AttribDict()
             tr.stats.sac.stla = inv[0][0].latitude
             tr.stats.sac.stlo = inv[0][0].longitude
-            tr.stats.sac.stdp = inv[0][0].depth/1000
+            tr.stats.sac.stel = inv[0][0].elevation/1000
             tr.stats.sac.evla = inv[0][0].evla
             tr.stats.sac.evlo = inv[0][0].evlo
             tr.stats.sac.evdp = inv[0][0].evdp
