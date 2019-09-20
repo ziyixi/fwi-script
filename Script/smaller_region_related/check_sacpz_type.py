@@ -9,5 +9,5 @@ for fpath in sorted(glob(join(basedir, "*"))):
     for item in sorted(glob(sacpzpath)):
         if("BHZ" in item):
             value = True
-    if(value):
+    if(not value):
         print(basename(fpath))
