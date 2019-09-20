@@ -47,9 +47,9 @@ def generate_single(gcmtid):
             tr.stats.sac.stla = inv[0][0].latitude
             tr.stats.sac.stlo = inv[0][0].longitude
             tr.stats.sac.stel = inv[0][0].elevation/1000
-            tr.stats.sac.evla = inv[0][0].evla
-            tr.stats.sac.evlo = inv[0][0].evlo
-            tr.stats.sac.evdp = inv[0][0].evdp
+            tr.stats.sac.evla = evla
+            tr.stats.sac.evlo = evlo
+            tr.stats.sac.evdp = evdp
             # calculate dist,az,baz,gcarc
             dist_m, az, baz = gps2dist_azimuth(
                 evla, evlo, tr.stats.sac.stla, tr.stats.sac.stlo)
