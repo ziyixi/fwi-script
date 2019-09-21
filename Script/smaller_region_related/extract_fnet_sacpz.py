@@ -28,9 +28,6 @@ for gcmtid in gcmtids:
         fname_spliter = fname.split("_")
         sta = fname_spliter[3]
         station_keys[gcmtid].add(sta)
-
-# combine files and output to output_dir
-for gcmtid in gcmtids:
     # mkdir
     command = f"mkdir -p {output_dir}/{gcmtid}"
     subprocess.call(command, shell=True)
@@ -41,3 +38,16 @@ for gcmtid in gcmtids:
             for f in sta_files:
                 with open(f, "w") as infile:
                     outfile.write(infile.read())
+
+# # combine files and output to output_dir
+# for gcmtid in gcmtids:
+#     # mkdir
+#     command = f"mkdir -p {output_dir}/{gcmtid}"
+#     subprocess.call(command, shell=True)
+#     # combine files
+#     for sta in sorted(station_keys[gcmtid]):
+#         sta_files = glob(join(temp_dir, gcmtid, f"SAC_PZs_BO_{sta}_*"))
+#         with open(f"{output_dir}/{gcmtid}/BO.{sta}", "w") as outfile:
+#             for f in sta_files:
+#                 with open(f, "w") as infile:
+#                     outfile.write(infile.read())
