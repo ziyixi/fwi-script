@@ -8,7 +8,7 @@ temp_dir = "/mnt/home/xiziyi/data/temp_sacpz"
 output_dir = "/mnt/home/xiziyi/data/fnet_sacpz"
 
 # get gcmtid to extract
-gcmtids = np.loadtxt("./from284.txt")
+gcmtids = np.loadtxt("./from284.txt", dtype=np.str)
 
 # extract all sacpzs to temp_dir
 for gcmtid in gcmtids:
