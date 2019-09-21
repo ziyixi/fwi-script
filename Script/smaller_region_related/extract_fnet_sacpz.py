@@ -32,7 +32,7 @@ for gcmtid in gcmtids:
         sta_files = glob(join(temp_dir, gcmtid, f"SAC_PZs_BO_{sta}_*"))
         with open(f"{output_dir}/{gcmtid}/BO.{sta}", "w") as outfile:
             for f in sta_files:
-                with open(f, "w") as infile:
+                with open(f, "r") as infile:
                     outfile.write(infile.read())
 
 # # * rename and combine sacpzs
