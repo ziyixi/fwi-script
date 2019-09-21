@@ -8,7 +8,7 @@ for each_dir in all_dirs:
     gcmtid = basename(each_dir)
     sac_files = sorted(glob(join(each_dir, "*")))
     sac_files = [basename(item) for item in sac_files]
-    sac_files = sac_files.remove("SACPZ")
+    sac_files.remove("SACPZ")
     no3comp_num = 0
     for sac_file in sac_files:
         net, sta, comp = sac_file.split(".")
