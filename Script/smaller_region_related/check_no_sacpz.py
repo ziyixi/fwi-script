@@ -39,3 +39,6 @@ for gcmtid in events_284:
     only_sac = len(allsac-allpz)
     only_pz = len(allpz-allsac)
     print(gcmtid, only_sac, only_pz)
+
+    if(gcmtid == "200903130907A"):
+        print(allsac-allpz)
