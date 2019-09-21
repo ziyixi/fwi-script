@@ -18,7 +18,7 @@ for each_dir in all_dirs:
     try:
         sac_files.remove("SACPZ")
     except:
-        pass
+        sac_files.remove("PZ")
     no3comp_num = 0
     thekey = set()
     for sac_file in sac_files:
