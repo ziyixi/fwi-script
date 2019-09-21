@@ -19,8 +19,8 @@ for gcmtid in events_200:
     allpz = glob(join(fpath, "SACPZ", "*"))
     allpz = set([basename(item) for item in allpz])
 
-    only_sac = allsac-allpz
-    only_pz = allpz-allsac
+    only_sac = len(allsac-allpz)
+    only_pz = len(allpz-allsac)
     print(gcmtid, only_sac, only_pz)
 
 # test 284 events
@@ -36,6 +36,6 @@ for gcmtid in events_284:
     allpz = glob(join(fpath, "SACPZ", "*"))
     allpz = set([basename(item) for item in allpz])
 
-    only_sac = allsac-allpz
-    only_pz = allpz-allsac
+    only_sac = len(allsac-allpz)
+    only_pz = len(allpz-allsac)
     print(gcmtid, only_sac, only_pz)
