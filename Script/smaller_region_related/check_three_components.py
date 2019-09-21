@@ -15,7 +15,10 @@ for each_dir in all_dirs:
 
     sac_files = sorted(glob(join(each_dir, "*")))
     sac_files = [basename(item) for item in sac_files]
-    sac_files.remove("SACPZ")
+    try:
+        sac_files.remove("SACPZ")
+    except:
+        pass
     no3comp_num = 0
     thekey = set()
     for sac_file in sac_files:
