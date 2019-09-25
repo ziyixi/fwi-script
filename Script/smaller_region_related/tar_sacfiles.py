@@ -13,8 +13,7 @@ from functools import partial
 def tar_onefile(fpath, output_dir):
     thebase = basename(fpath)
     tarpath = join(output_dir, f"{thebase}.tar.gz")
-    command = f"cd {dirname(fpath)}"
-    command = f"tar -czf {tarpath} {thebase}"
+    command = f"tar -czf {tarpath} -C {fpath} ."
     subprocess.call(command, shell=True)
 
 
