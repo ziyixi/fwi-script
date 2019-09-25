@@ -66,7 +66,7 @@ def interp_value(lat, lon, dep, x_mesh, y_mesh, z_mesh, value_mesh):
 @click.command()
 @click.option('--region', required=True, type=str, help="minlon/maxlon/minlat/maxlat/mindep/maxdep, min and max only represents for corresponding points")
 @click.option('--rawregion', required=True, type=str, help="minlon/maxlon/minlat/maxlat/mindep/maxdep, raw region in npy files")
-@click.option('--data', required=True, type=str, help="the pickle file")
+@click.option('--data', required=True, type=str, help="the npy file")
 @click.option('--parameter', required=True, type=str, help="physicial parameter to plot")
 @click.option('--npts', required=True, type=str, help="nlon/nlat/ndep")
 def main(region, rawregion, data, parameter, npts):
@@ -119,7 +119,7 @@ def main(region, rawregion, data, parameter, npts):
                 # plot_values[ih, iv] = interp_value(
                 #     lat_mesh[ih], lon_mesh[ih], dep_mesh[iv], x_mesh, y_mesh, z_mesh, data)
                 array_to_interpolate[ih, iv, :] = [
-                    lat_mesh[ih], lon_mesh[ih], dep_mesh[iv]]
+                    lon_mesh[ih], lat_mesh[ih], dep_mesh[iv]]
     else:
         lat_mesh = np.linspace(minlat, maxlat, vnpts)
         lon_mesh = np.linspace(minlon, maxlon, hnpts)
@@ -128,7 +128,7 @@ def main(region, rawregion, data, parameter, npts):
                 # plot_values[ih, iv] = interp_value(
                 #     lat_mesh[iv], lon_mesh[ih], mindep, x_mesh, y_mesh, z_mesh, data)
                 array_to_interpolate[ih, iv, :] = [
-                    lat_mesh[iv], lon_mesh[ih], mindep]
+                    lon_mesh[iv], lat_mesh[ih], mindep]
 
     # build up the interpolation function
     interpolating_function = RegularGridInterpolator(
@@ -150,8 +150,8 @@ def main(region, rawregion, data, parameter, npts):
     else:
         vmax = vmax_round+0.01
     # ! set vmin and vmax here
-    vmin = -0.03
-    vmax = 0.03
+    # vmin = -0.03
+    # vmax = 0.03
 
     v = np.arange(vmin, vmax, 0.01)
 
@@ -160,7 +160,7 @@ def main(region, rawregion, data, parameter, npts):
         lat_diff = np.abs(maxlat-minlat)
         lon_diff = np.abs(maxlon-minlon)
         plot_on = None
-        if(lat_diff > lon_diff):
+        if(lat_diff >= lon_diff):
             mesh_plot_h, mesh_plot_v = np.meshgrid(
                 lat_mesh, dep_mesh, indexing="ij")
             plot_on = "latitude"
