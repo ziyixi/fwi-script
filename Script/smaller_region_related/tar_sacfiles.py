@@ -1,7 +1,7 @@
 """
 tar all the directories in a directory
 """
-from os.path import join, basename
+from os.path import join, basename, dirname
 from glob import glob
 import subprocess
 import tqdm
@@ -13,7 +13,8 @@ from functools import partial
 def tar_onefile(fpath, output_dir):
     thebase = basename(fpath)
     tarpath = join(output_dir, f"{thebase}.tar.gz")
-    command = f"tar -czf {tarpath} {fpath}"
+    command = f"cd {dirname(fpath)}"
+    command = f"tar -czf {tarpath} {thebase}"
     subprocess.call(command, shell=True)
 
 
