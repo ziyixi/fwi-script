@@ -35,7 +35,7 @@ from slurmpy import Slurm
 # s.run(f"cd ..; date; {command1}; date;")
 
 # ! per_s362ani_min+per_tao->per_s362ani_min_tao
-nproc_old = 144
+nproc_old = 336
 old_mesh_dir = "/scratch/05880/tg851791/work/generate_hybrid_v703/gll_work/control_file/tao"
 old_model_dir = "/scratch/05880/tg851791/work/generate_hybrid_v703/gll_work/perturbation/per_tao"
 nproc_new = 441
