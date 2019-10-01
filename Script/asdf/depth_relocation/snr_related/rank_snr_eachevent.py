@@ -23,7 +23,7 @@ def sort_all():
     all_files = glob(join(base_dir, "*"))
     all_bases = [basename(item) for item in all_files]
     all_outputs = [join(output_dir, item) for item in all_bases]
-    for raw_name, out_name in tqdm.tqdm(zip(all_files, all_outputs)):
+    for raw_name, out_name in tqdm.tqdm(zip(all_files, all_outputs), total=len(all_files)):
         reorder_single(raw_name, out_name)
 
 
