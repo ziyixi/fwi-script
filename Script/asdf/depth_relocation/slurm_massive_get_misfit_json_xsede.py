@@ -12,11 +12,17 @@ N_each = 20
 N_iter = 137  # 117
 nproc = 24
 
+# PY = "/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
+# data_dir = "/scratch/05880/tg851791/process_data/all_484_processed_simplified"
+# sync_dir = "/scratch/05880/tg851791/relocation/work/asdf_processed_new"
+# log_file = "/scratch/05880/tg851791/relocation/work/misfit.log"
+# json_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
+
 PY = "/work/05880/tg851791/stampede2/anaconda3/envs/asdf/bin/python"
 data_dir = "/scratch/05880/tg851791/process_data/all_484_processed_simplified"
 sync_dir = "/scratch/05880/tg851791/relocation/work/asdf_processed_new"
-log_file = "/scratch/05880/tg851791/relocation/work/misfit.log"
-json_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
+log_file = "/scratch/05880/tg851791/relocation/work/misfit_cc.75.log"
+json_dir = "/scratch/05880/tg851791/relocation/work/misfit_json_cc.75"
 
 # a tuple about the paired asdf files
 Pair = collections.namedtuple('Pair', 'data sync maxp minp jsonb jsons')

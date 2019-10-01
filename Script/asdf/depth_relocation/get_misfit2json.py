@@ -19,6 +19,8 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 isroot = (rank == 0)
 
+CCT_treshold = 0.75
+
 
 def get_property_times(stla, stlo, evla, evlo, evdp):
     property_times = {
@@ -174,7 +176,7 @@ def filter_windows(windows, obs, syn, status):
         if(windows[key] != None):
             CCT = cal_waveform_similarity(
                 windows[key][0], windows[key][1], obs, syn)
-            if(CCT < 0.5):
+            if(CCT < CCT_treshold):
                 windows[key] = None
     return windows
 
