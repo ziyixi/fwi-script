@@ -15,6 +15,7 @@ def reorder_single(raw_name, out_name):
     data = np.loadtxt(raw_name, dtype=np.str)
     z_snr = data[:, -1].astype(np.float)
     z_order = np.argsort(z_snr)
+    print(z_order.shape, data.shape)
     data = data[:, z_order]
     np.savetxt(out_name, data)
 
