@@ -24,7 +24,10 @@ def sort_all():
     all_bases = [basename(item) for item in all_files]
     all_outputs = [join(output_dir, item) for item in all_bases]
     for raw_name, out_name in tqdm.tqdm(zip(all_files, all_outputs), total=len(all_files)):
-        reorder_single(raw_name, out_name)
+        try:
+            reorder_single(raw_name, out_name)
+        except:
+            print(raw_name)
 
 
 if __name__ == "__main__":
