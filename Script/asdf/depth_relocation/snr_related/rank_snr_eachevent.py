@@ -17,7 +17,7 @@ def reorder_single(raw_name, out_name):
     z_order = np.argsort(z_snr)
     print(z_order.shape, data.shape)
     data = data[z_order, :]
-    np.savetxt(out_name, data)
+    np.savetxt(out_name, data, delimiter=" ", fmt="%s")
 
 
 def sort_all():
