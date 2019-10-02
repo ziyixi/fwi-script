@@ -11,8 +11,8 @@ import pandas as pd
 import tqdm
 
 # base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
-# base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
-snr_dir = "/scratch/05880/tg851791/relocation/work/misfit_json_cc.75"
+base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json_cc.75"
+snr_dir = "/scratch/05880/tg851791/process_data/snr"
 bin_angle = 20
 min_snr = 3
 
