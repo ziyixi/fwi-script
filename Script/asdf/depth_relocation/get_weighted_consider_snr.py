@@ -10,8 +10,9 @@ from os.path import join, basename, isfile
 import pandas as pd
 import tqdm
 
-base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
-snr_dir = "/scratch/05880/tg851791/process_data/snr"
+# base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
+# base_dir = "/scratch/05880/tg851791/relocation/work/misfit_json"
+snr_dir = "/scratch/05880/tg851791/relocation/work/misfit_json_cc.75"
 bin_angle = 20
 min_snr = 3
 
@@ -217,6 +218,8 @@ def get_misfit_each_pair(body_json, surf_json, bin_angle, misfit_path):
     body_dict = json.load(body_f)
     surf_dict = json.load(surf_f)
     json_dict = combine_json_dict(body_dict, surf_dict)
+
+    # * add a function to output the windows
 
     # get snr information
     misfit_mat = None
