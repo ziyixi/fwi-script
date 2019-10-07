@@ -8,7 +8,7 @@ import mtspec as mft
 import numpy as np
 import obspy
 import pyasdf
-from loguru import logger
+# from loguru import logger
 from mpi4py import MPI
 from obspy.geodetics.base import gps2dist_azimuth, locations2degrees
 from obspy.taup import TauPyModel
@@ -18,6 +18,8 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 isroot = (rank == 0)
+
+CCT_treshold = 0.75
 
 
 def get_property_times(stla, stlo, evla, evlo, evdp):
@@ -150,6 +152,8 @@ def cal_waveform_similarity(starttime, endtime, obs, syn):
     syn_t = syn[1].slice(starttime, endtime).data
     syn_z = syn[2].slice(starttime, endtime).data
 
+    # reset the start time of syn, so the data points could be the same
+
     similarity = np.sum(np.abs(obs_r*syn_r) +
                         np.abs(obs_t*syn_t)+np.abs(obs_z*syn_z))/np.sqrt(np.sum(obs_r*obs_r+obs_t*obs_t+obs_z*obs_z)*np.sum(syn_r*syn_r+syn_t*syn_t+syn_z*syn_z))
     return similarity
@@ -174,7 +178,7 @@ def filter_windows(windows, obs, syn, status):
         if(windows[key] != None):
             CCT = cal_waveform_similarity(
                 windows[key][0], windows[key][1], obs, syn)
-            if(CCT < 0.5):
+            if(CCT < CCT_treshold):
                 windows[key] = None
     return windows
 
@@ -244,6 +248,7 @@ def get_amp_timelen_values(windows, st, st_syn):
             result_time["r"][key] = endtime-starttime
             data_syn = trace_syn.slice(starttime, endtime).data
             ratio = np.max(np.abs(data))/np.max(np.abs(data_syn))
+            # ! remove traces wen the ratio is larger than 3
             if(ratio > 3 or ratio < 1/3):
                 result["r"][key] = None
     # t
@@ -286,8 +291,8 @@ def get_amp_timelen_values(windows, st, st_syn):
 def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
     freqmin = 1.0/max_period
     freqmax = 1.0/min_period
-    obs_ds = pyasdf.ASDFDataSet(obs_path)
-    syn_ds = pyasdf.ASDFDataSet(syn_path)
+    obs_ds = pyasdf.ASDFDataSet(obs_path, mode="r")
+    syn_ds = pyasdf.ASDFDataSet(syn_path, mode="r")
     event = obs_ds.events[0]
     origin = event.preferred_origin() or event.origins[0]
     evla = origin.latitude
@@ -295,7 +300,7 @@ def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
     evdp = origin.depth/1000
 
     # add logger information
-    logger.add(logfile, format="{time} {level} {message}", level="INFO")
+    # logger.add(logfile, format="{time} {level} {message}", level="INFO")
 
     # kernel function
     def process(sg_obs, sg_syn):
@@ -310,7 +315,7 @@ def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
         inv_obs = sg_obs["StationXML"]
         station_info = {inv_obs.get_contents()['stations'][0]}
         if(len(waveform_tags) == 0):
-            logger.info(f"[{rank}/{size}] {station_info}: no data")
+            # logger.info(f"[{rank}/{size}] {station_info}: no data")
             return None  # no data for this station
 
         tag_obs = waveform_tags[0]
@@ -321,6 +326,20 @@ def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
         # since we couldn't return a float32, we have to modify st to float64
         st_obs = st_obs_raw.copy()
         st_syn = st_syn_raw.copy()
+        # * we should make the data and sync comparable
+        # find the max starttime and min endtime
+        starttime_opt = max(st_obs[0].stats.starttime,
+                            st_syn[0].stats.starttime)
+        endtime_opt = min(st_obs[0].stats.endtime, st_syn[0].stats.endtime)
+        for trace in st_obs:
+            trace.trim(starttime_opt, endtime_opt)
+        for tace in st_syn:
+            trace.trim(starttime_opt, endtime_opt)
+        # make all the starttime of trimmed traces the same
+        starttime_ref = st_obs[0].stats.starttime
+        for trace in st_syn:
+            trace.stats.starttime = starttime_ref
+
         for trace in st_obs:
             trace.data = np.require(trace.data, dtype="float64")
         for trace in st_syn:
@@ -355,8 +374,8 @@ def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
         for key in windows:
             if(windows[key] != None):
                 windows_numbers += 1
-        logger.info(
-            f"[{rank}/{size}] {station_info}: win_num:{windows_numbers} misfit_r:{result['misfit_r']} misfit_t:{result['misfit_t']} misfit_z:{result['misfit_z']}")
+        # logger.info(
+        #     f"[{rank}/{size}] {station_info}: win_num:{windows_numbers} misfit_r:{result['misfit_r']} misfit_t:{result['misfit_t']} misfit_z:{result['misfit_z']}")
 
         # we should collect information of the max amplitude for normalization
         amp_values, time_length_values = get_amp_timelen_values(
@@ -440,15 +459,15 @@ def run(obs_path, syn_path, max_period, min_period, status, logfile, jsonfile):
     # here we have a dict, the key is {network}.{station}, and the value is the returned result.
     if(isroot):
         gcmt_id = origin.resource_id.id.split("/")[-2]
-        logger.info(
-            f"start to calculate misfit for {gcmt_id}, with {status}, from {min_period} to {max_period}")
+        # logger.info(
+        #     f"start to calculate misfit for {gcmt_id}, with {status}, from {min_period} to {max_period}")
     results = obs_ds.process_two_files_without_parallel_output(syn_ds, process)
 
     with open(jsonfile, 'w') as fp:
         json.dump(results, fp)
 
-    if(isroot):
-        logger.success(f"success for event {gcmt_id}")
+    # if(isroot):
+    #     logger.success(f"success for event {gcmt_id}")
 
 
 @click.command()
